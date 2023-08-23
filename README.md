@@ -18,7 +18,8 @@ EduHOME functions as an educational hub, enabling the seamless connection betwee
 - Frontend
     - Flutter
 - UI Design
-    - Figma
+    - <a href="https://www.figma.com/file/ho4kAJ75QsghnT6tBwc0Of/EduHOME_Updated?type=design&node-id=0%3A1&mode=design&t=O4Qrm6VfPhYQMCwS-1">Figma</a>
+
 
 
 # DataBase Schema:
