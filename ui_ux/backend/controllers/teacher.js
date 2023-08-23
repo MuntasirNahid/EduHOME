@@ -243,7 +243,7 @@ const getAllTeachers = async (req, res) => {
 };
 
 //UPDATE
-const updateTeacherProfile = async (req, res) => {
+const updateTeacher = async (req, res) => {
   const teacherId = req.params.id;
   const updateData = req.body;
 
@@ -279,7 +279,7 @@ module.exports = {
   getTeacherProfileDetails,
   teacherLogout,
   acceptPendingOffer,
-  updateTeacherProfile,
+  updateTeacher,
   getFilteredAdvertisement,
   rejectPendingOffer,
   applyForTuition,

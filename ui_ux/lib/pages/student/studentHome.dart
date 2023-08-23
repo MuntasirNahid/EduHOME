@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ui_ux/models/teacher.dart';
+import 'package:ui_ux/models/Student.dart';
+import 'package:ui_ux/models/student2.dart';
+import 'package:ui_ux/models/teacher2.dart';
 import 'package:ui_ux/pages/student/services/student_services.dart';
 import 'package:ui_ux/pages/student/studentNotificationPage.dart';
 import 'package:ui_ux/pages/student/studentOfferTeacherPage.dart';
+import 'package:ui_ux/provider/student_provider.dart';
 import 'package:ui_ux/widgets/student/teacher_list.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -19,21 +22,27 @@ class studentHome extends StatefulWidget {
 class _studentHomeState extends State<studentHome> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ApiService _apiService = ApiService();
-  List<Teacher> teachers = [];
 
-  String studentName = '';
+  List<Teacher2> teachers = [];
+
+  String picturePath = '';
+  String fullName = '';
+
+  Student? currentStudent = StudentUser.getCurrentStudentUser();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    picturePath = currentStudent!.picturePath;
+    fullName = currentStudent!.fullName;
     fetchTeachers();
-    //  fetchStudentName();
   }
 
   Future<void> fetchTeachers() async {
     try {
-      List<Teacher> fetchedTeachers = await _apiService.getALlTeachers(context);
+      List<Teacher2> fetchedTeachers =
+          await _apiService.getALlTeachers(context);
       setState(() {
         teachers = fetchedTeachers;
       });
@@ -41,16 +50,6 @@ class _studentHomeState extends State<studentHome> {
       print('Error fetching teachers: $e');
     }
   }
-  //  Future<void> fetchStudentName() async {
-  //   // Fetch student name using student ID
-  //   final response = await http.get('');//student's details
-  //   if (response.statusCode == 200) {
-  //     final data = json.decode(response.body);
-  //     setState(() {
-  //       studentName = data['fullName'];
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -71,10 +70,13 @@ class _studentHomeState extends State<studentHome> {
           children: [
             Text(
               'Welcome Back',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(
+                color: Colors.black87,
+                //     fontFamily: 'Poppins',
+              ),
             ),
             Text(
-              'Muntasir Mamun',
+              fullName,
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ],

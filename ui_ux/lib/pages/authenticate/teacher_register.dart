@@ -1,6 +1,9 @@
 import 'package:ui_ux/constants/dropdown_list.dart';
+import 'package:ui_ux/models/Teacher.dart';
 import 'package:ui_ux/pages/authenticate/signInTeacher.dart';
 import 'package:ui_ux/pages/landing/teacherLanding.dart';
+import 'package:ui_ux/services/authenticate/authentication_repository.dart';
+import 'package:ui_ux/services/authenticate/controllers/teacher_signup_controller.dart';
 import 'package:ui_ux/widgets/custom_dropdown.dart';
 import 'package:ui_ux/widgets/teacher_subject_salary.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +13,7 @@ import '../../constants/heading_textfield.dart';
 import '../../constants/icon_constants.dart';
 import '../../constants/input_decoration.dart';
 import '../../widgets/back_button.dart';
+import 'package:get/get.dart';
 
 class TeacherRegister extends StatefulWidget {
   const TeacherRegister({super.key});
@@ -20,43 +24,55 @@ class TeacherRegister extends StatefulWidget {
 
 class _TeacherRegisterState extends State<TeacherRegister> {
   final _formKey = GlobalKey<FormState>();
-  final nameEditingController = TextEditingController();
-  final classEditingController = TextEditingController();
-  final locationEditingController = TextEditingController();
-  final phoneEditingController = TextEditingController();
-  final passwordEditingController = TextEditingController();
-  String genderInput = "";
-  String experienceInput = "";
-  String occupationInput = "";
-  String instituteInput = "";
+  final controller = Get.put(TeacherSignUpController());
+  String genderInput = "Male";
+  String experienceInput = "0";
+  String occupationInput = "Student";
+  String instituteInput = "None";
   bool _obscureText = true;
   bool isStudent = false;
 
   String minInput = "";
   String maxInput = "";
-  String subjectInput = "";
+  String subjectInput = "None";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.experiance.text = "0";
+    controller.gender.text = "Male";
+    controller.instituition.text = "None";
+    controller.subject.text = "None";
+    controller.maxSalary.text = "50000";
+    controller.minSalary.text = "1000";
+  }
 
   void handleSubject(String value) {
     setState(() {
       subjectInput = value;
+      controller.subject.text = value;
     });
   }
 
   void handleMin(String value) {
     setState(() {
       minInput = value;
+      controller.minSalary.text = value;
     });
   }
 
   void handleMax(String value) {
     setState(() {
       maxInput = value;
+      controller.maxSalary.text = value;
     });
   }
 
   void handleOccupation(String value) {
     setState(() {
       occupationInput = value;
+      controller.occupation.text = value;
       if (occupationInput == 'Student') {
         isStudent = true;
       } else {
@@ -68,18 +84,21 @@ class _TeacherRegisterState extends State<TeacherRegister> {
   void handleInstitute(String value) {
     setState(() {
       instituteInput = value;
+      controller.instituition.text = value;
     });
   }
 
   void handleGender(String value) {
     setState(() {
       genderInput = value;
+      controller.gender.text = value;
     });
   }
 
   void handleExperience(String value) {
     setState(() {
       experienceInput = value;
+      controller.experiance.text = value;
     });
   }
 
@@ -133,13 +152,59 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                   child: TextFormField(
                     validator: (value) {
                       //value = value.toString();
-                      if (value == null || value.isEmpty) {
-                        return "please enter Full Name";
-                      }
+                      final bool nameValid =
+                          RegExp(r"^[a-zA-Z\s'-]+$").hasMatch(value.toString());
+                      if (nameValid)
+                        return null;
+                      else
+                        return 'Please Provide Your Name Not Anything Else';
+                    },
+                    cursorColor: Colors.grey[900],
+                    controller: controller.fullName,
+                    decoration: inputDecoration,
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                HeadingText(headingText: "Email"),
+                Container(
+                  height: 50,
+                  width: 333,
+                  decoration: containerDecoration,
+                  child: TextFormField(
+                    validator: (value) {
+                      final bool emailValid = RegExp(
+                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          .hasMatch(value.toString());
+
+                      if (!emailValid) return "A valid format please";
                       return null;
                     },
                     cursorColor: Colors.grey[900],
-                    controller: nameEditingController,
+                    controller: controller.email,
+                    decoration: inputDecoration,
+                  ),
+                ),
+
+                SizedBox(
+                  height: 5,
+                ),
+                HeadingText(headingText: "Teaches"),
+                Container(
+                  height: 50,
+                  width: 333,
+                  decoration: containerDecoration,
+                  child: TextFormField(
+                    validator: (value) {
+                      final bool subjectValid = RegExp(r'^[\w\s]+(,[\w\s]+)*$')
+                          .hasMatch(value.toString());
+                      if (!subjectValid)
+                        return "Please Provide The Format: Phy,Math,Chem....";
+                      return null;
+                    },
+                    cursorColor: Colors.grey[900],
+                    controller: controller.teaches,
                     decoration: inputDecoration,
                   ),
                 ),
@@ -228,7 +293,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                       return null;
                     },
                     cursorColor: Colors.grey[900],
-                    controller: locationEditingController,
+                    controller: controller.location,
                     decoration: inputDecoration.copyWith(
                         prefixIcon: Icon(
                       location_on,
@@ -247,13 +312,16 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                   child: TextFormField(
                     validator: (value) {
                       //value = value.toString();
-                      if (value == null || value.isEmpty) {
-                        return "please enter Your Phone Number";
-                      }
+
+                      final bool phnValid =
+                          RegExp(r'(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$')
+                              .hasMatch(value.toString());
+                      if (!phnValid) return "Please Provide The Valid Phone";
+
                       return null;
                     },
                     cursorColor: Colors.grey[900],
-                    controller: phoneEditingController,
+                    controller: controller.phoneNo,
                     decoration: inputDecoration.copyWith(
                         prefixIcon: Icon(
                       smartphone,
@@ -277,7 +345,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                       return null;
                     },
                     cursorColor: Colors.grey[900],
-                    controller: passwordEditingController,
+                    controller: controller.password,
                     obscureText: _obscureText,
                     decoration: inputDecoration.copyWith(
                         prefixIcon: Icon(
@@ -496,21 +564,44 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                                 0xFF000000),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50.0))),
-                    onPressed: () {
-                      //print(genderInput);
-                      // print(minInput);
-                      // print(maxInput);
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Done')),
-                        );
+                        try {
+                          AuthenticationRepository.instance.userType.value =
+                              "Tutor";
+
+                          Teacher signupTeacherData = Teacher(
+                              id: "new",
+                              fullName: controller.fullName.text.trim(),
+                              gender: controller.gender.text.trim(),
+                              experience: controller.experiance.text.trim(),
+                              location: controller.location.text.trim(),
+                              email: controller.email.text.trim(),
+                              phoneNumber: controller.phoneNo.text.trim(),
+                              occupation: controller.occupation.text.trim(),
+                              institution: controller.instituition.text.trim(),
+                              subject: controller.subject.text.trim(),
+                              picturePath: "Default Picture",
+                              teachingSubject: controller.teaches.text.trim(),
+                              minSalary: controller.minSalary.text.trim(),
+                              maxSalary: controller.maxSalary.text.trim());
+
+                          TeacherSignUpController.instance.registerUser(
+                              controller.email.text.trim(),
+                              controller.password.text.trim(),
+                              signupTeacherData);
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Done')),
+                          );
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text(
+                                    'You Messed Up With Credentials!!! Try Again...')),
+                          );
+                        }
                       }
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TeacherLandingPage(),
-                        ),
-                      );
                     },
                     child: Text(
                       "Sign up",

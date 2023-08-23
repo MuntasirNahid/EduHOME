@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ui_ux/models/teacher.dart';
+import 'package:ui_ux/models/teacher2.dart';
 
 class TeacherListCard extends StatelessWidget {
-  final Teacher teacher;
+  final Teacher2 teacher;
   final String teacherName;
   final String subjects;
   final String experience;

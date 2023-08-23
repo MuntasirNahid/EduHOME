@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:ui_ux/models/student.dart';
+import 'package:ui_ux/models/student2.dart';
 import 'package:ui_ux/pages/teacher/services/teacher_services.dart';
 import 'package:ui_ux/pages/teacher/teacherNotification.dart';
 import 'package:ui_ux/widgets/myStudentsCard.dart';
@@ -15,7 +15,7 @@ class teacherMyStudents extends StatefulWidget {
 class _teacherMyStudentsState extends State<teacherMyStudents> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  List<Student> myStudents = [];
+  List<Student2> myStudents = [];
 
   @override
   void initState() {
@@ -25,7 +25,7 @@ class _teacherMyStudentsState extends State<teacherMyStudents> {
 
   Future<void> fetchMyStudentsForTeacher() async {
     try {
-      List<Student> fetchedMyStudents = await ApiService()
+      List<Student2> fetchedMyStudents = await ApiService()
           .fetchMyStudentsForTeacher(
               "64d8e7d6b7f46ededc395c1e"); //giving teacherID
       setState(() {

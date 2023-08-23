@@ -14,7 +14,7 @@ const {
   getMyAdvertisements,
   studentLogout,
   postTuitionAdvertisement,
-  updateStudentProfile,
+  updateStudent,
   updateTuitionPost,
   deleteTuitionAdvertisement,
   acceptApplicant,
@@ -56,7 +56,7 @@ router.post("/:id/offer/:teacherId", offerTeacher);
 router.post("/rateTeacher/:teacherId", rateTeacher);
 
 //UPDATE
-router.patch("/:id/Profile", updateStudentProfile); // update profile
+router.patch("/:id/Profile", updateStudent); // update profile
 router.patch("/:id/updateTuitionPost", updateTuitionPost); //here id is advertisements id
 
 //DELETE

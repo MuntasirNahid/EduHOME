@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Teacher {
   final String id;
   final String fullName;
@@ -6,65 +8,52 @@ class Teacher {
   final String location;
   final String email;
   final String phoneNumber;
-  final String password;
   final String occupation;
   final String institution;
   final String subject;
   final String picturePath;
-  final List<String> teachingSubject;
-  final List<int> rating;
+  final String teachingSubject;
   final String minSalary;
+
+  var rating;
+
   final String maxSalary;
-  final List<String> studentId;
 
-  Teacher({
-    required this.id,
-    required this.fullName,
-    required this.gender,
-    required this.experience,
-    required this.location,
-    required this.email,
-    required this.phoneNumber,
-    required this.password,
-    required this.occupation,
-    required this.institution,
-    required this.subject,
-    required this.picturePath,
-    required this.teachingSubject,
-    required this.rating,
-    required this.minSalary,
-    required this.maxSalary,
-    required this.studentId,
-  });
+  Teacher(
+      {required this.id,
+      required this.fullName,
+      required this.gender,
+      required this.experience,
+      required this.location,
+      required this.email,
+      required this.phoneNumber,
+      required this.occupation,
+      required this.institution,
+      required this.subject,
+      required this.picturePath,
+      required this.teachingSubject,
+      required this.minSalary,
+      required this.maxSalary,
+      this.rating});
 
-  double calculateMeanRating() {
-    if (rating.isEmpty) {
-      return 3.0; // Default rating if no values are present
-    }
-
-    int totalRatings = rating.reduce((sum, value) => sum + value);
-    return totalRatings / rating.length;
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      "fullName": fullName,
+      "gender": gender,
+      "experience": experience,
+      "location": location,
+      "email": email,
+      "phoneNumber": phoneNumber,
+      "occupation": occupation,
+      "institution": institution,
+      "subject": subject,
+      "picturePath": picturePath,
+      "teachingSubject": teachingSubject,
+      "minSalary": minSalary,
+      "maxSalary": maxSalary,
+    };
   }
 
-  factory Teacher.fromJson(Map<String, dynamic> json) {
-    return Teacher(
-      id: json['_id'],
-      fullName: json['fullName'],
-      gender: json['gender'],
-      experience: json['experience'],
-      location: json['location'],
-      email: json['email'],
-      phoneNumber: json['phoneNumber'],
-      password: json['password'],
-      occupation: json['occupation'],
-      institution: json['institution'],
-      subject: json['subject'],
-      picturePath: json['picturePath'],
-      teachingSubject: List<String>.from(json['teachingSubject']),
-      rating: List<int>.from(json['rating'] ?? []),
-      minSalary: json['minSalary'],
-      maxSalary: json['maxSalary'],
-      studentId: List<String>.from(json['studentId']),
-    );
-  }
+  String toJson() => json.encode(toMap());
 }

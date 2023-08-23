@@ -1,47 +1,39 @@
+import 'dart:convert';
+
 class Student {
+  final String id;
   final String fullName;
-  final int classStudies;
   final String location;
+  final String email;
   final String phoneNumber;
-  final String password;
-  final String picturePath;
+  late final String picturePath;
   final String institution;
-  final List<String> teacherId;
+
+  final String classStudies;
 
   Student({
+    required this.id,
     required this.fullName,
-    required this.classStudies,
     required this.location,
+    required this.email,
     required this.phoneNumber,
-    required this.password,
     required this.picturePath,
     required this.institution,
-    required this.teacherId,
+    required this.classStudies,
   });
 
-  factory Student.fromJson(Map<String, dynamic> json) {
-    return Student(
-      fullName: json['fullName'],
-      classStudies: json['classStudies'],
-      location: json['location'],
-      phoneNumber: json['phoneNumber'],
-      password: json['password'],
-      picturePath: json['picturePath'],
-      institution: json['institution'],
-      teacherId: List<String>.from(json['teacherId']),
-    );
-  }
-
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
-      'fullName': fullName,
-      'classStudies': classStudies,
-      'location': location,
-      'phoneNumber': phoneNumber,
-      'password': password,
-      'picturePath': picturePath,
-      'institution': institution,
-      'teacherId': teacherId,
+      'id': id,
+      "fullName": fullName,
+      "location": location,
+      "email": email,
+      "phoneNumber": phoneNumber,
+      "picturePath": picturePath,
+      "institution": institution,
+      "classStudies": classStudies,
     };
   }
+
+  String toJson() => json.encode(toMap());
 }

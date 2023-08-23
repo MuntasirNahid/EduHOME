@@ -28,18 +28,19 @@ const teacherSchema = new Schema({
     type: String,
     required: true,
     max: 20,
+    unique: true,
   },
   phoneNumber: {
     type: String,
-    required: false,
+    required: true,
     min: 6,
     max: 12,
   },
-  password: {
-    type: String,
-    required: true,
-    min: 5,
-  },
+  // password: {
+  //   type: String,
+  //   required: true,
+  //   min: 5,
+  // },
   occupation: {
     type: String,
     required: true,
@@ -66,7 +67,7 @@ const teacherSchema = new Schema({
     default: [],
   },
   rating: {
-    type: [Number], // Change type to Number array
+    type: [Number], 
     default: [],
   },
   minSalary: {

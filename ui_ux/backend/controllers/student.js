@@ -21,7 +21,7 @@ const getStudentAllTeachers = async (req, res) => {
     const student = await Student.findById(id);
 
     if (!student) {
-      return res.status(404).json({ message: "Teacher not found" });
+      return res.status(404).json({ message: "Student not found" });
     }
 
     const teacherIds = student.teacherId;
@@ -196,7 +196,7 @@ const postTuitionAdvertisement = async (req, res) => {
   }
 };
 
-const updateStudentProfile = async (req, res) => {
+const updateStudent = async (req, res) => {
   const studentId = req.params.id;
   const updateData = req.body; // updated data from request body
 
@@ -423,7 +423,7 @@ module.exports = {
   getStudentsIndividualTeacherDetails,
   studentLogout,
   postTuitionAdvertisement,
-  updateStudentProfile,
+  updateStudent,
   getMyAdvertisements,
   updateTuitionPost,
   deleteTuitionAdvertisement,

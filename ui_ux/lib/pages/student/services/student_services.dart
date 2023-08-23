@@ -2,13 +2,14 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:ui_ux/models/advertisement.dart';
-import 'package:ui_ux/models/teacher.dart';
+import 'package:ui_ux/models/student2.dart';
+import 'package:ui_ux/models/teacher2.dart';
 import 'package:ui_ux/models/notification.dart';
 
 class ApiService {
   final String baseUrl = 'http://192.168.0.103:4002';
 
-  Future<List<Teacher>> getALlTeachers(BuildContext context) async {
+  Future<List<Teacher2>> getALlTeachers(BuildContext context) async {
     try {
       final response = await http.get(
         Uri.parse('$baseUrl/api/student/getAllTeachers'),
@@ -19,8 +20,8 @@ class ApiService {
 
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
-        List<Teacher> teacherList = List<Teacher>.from(
-          data.map((json) => Teacher.fromJson(json)),
+        List<Teacher2> teacherList = List<Teacher2>.from(
+          data.map((json) => Teacher2.fromJson(json)),
         );
         return teacherList;
       } else {
@@ -31,7 +32,7 @@ class ApiService {
     }
   }
 
-  Future<List<Teacher>> getAllApplicants(String advertisementId) async {
+  Future<List<Teacher2>> getAllApplicants(String advertisementId) async {
     try {
       final response = await http.get(
         Uri.parse('$baseUrl/api/student/$advertisementId/applicants'),
@@ -42,8 +43,8 @@ class ApiService {
 
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
-        List<Teacher> applicantList = List<Teacher>.from(
-          data.map((json) => Teacher.fromJson(json)),
+        List<Teacher2> applicantList = List<Teacher2>.from(
+          data.map((json) => Teacher2.fromJson(json)),
         );
         return applicantList;
       } else {
@@ -54,7 +55,7 @@ class ApiService {
     }
   }
 
-  Future<List<Teacher>> fetchMyTeachersForStudent(String studentId) async {
+  Future<List<Teacher2>> fetchMyTeachersForStudent(String studentId) async {
     try {
       final response = await http.get(
         Uri.parse('$baseUrl/api/student/64d9bd2ccfe6020e4cfc8ef3/myTeachers'),
@@ -66,8 +67,8 @@ class ApiService {
 
       if (response.statusCode == 200) {
         List<dynamic> jsonData = jsonDecode(response.body);
-        List<Teacher> myTeachers =
-            jsonData.map((json) => Teacher.fromJson(json)).toList();
+        List<Teacher2> myTeachers =
+            jsonData.map((json) => Teacher2.fromJson(json)).toList();
         return myTeachers;
       } else {
         throw Exception(

@@ -1,13 +1,21 @@
+import 'package:ui_ux/constants/Colors.dart';
 import 'package:ui_ux/constants/dropdown_list.dart';
 import 'package:ui_ux/constants/heading_textfield.dart';
 import 'package:ui_ux/constants/icon_constants.dart';
 import 'package:ui_ux/constants/input_decoration.dart';
+import 'package:ui_ux/models/Student.dart';
+import 'package:ui_ux/pages/authenticate/email_verification.dart';
+import 'package:ui_ux/pages/authenticate/otp_screen.dart';
+import 'package:ui_ux/services/authenticate/authentication_repository.dart';
+import 'package:ui_ux/services/authenticate/controllers/student_signup_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:ui_ux/pages/authenticate/signInStudent.dart';
 import 'package:ui_ux/pages/landing/studentLanding.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../widgets/back_button.dart';
+import 'package:get/get.dart';
 
 class StudentRegister extends StatefulWidget {
   const StudentRegister({super.key});
@@ -18,12 +26,10 @@ class StudentRegister extends StatefulWidget {
 
 class _StudentRegisterState extends State<StudentRegister> {
   final _formKey = GlobalKey<FormState>();
-  final nameEditingController = TextEditingController();
-  final classEditingController = TextEditingController();
-  final locationEditingController = TextEditingController();
-  final phoneEditingController = TextEditingController();
-  final passwordEditingController = TextEditingController();
+  final controller = Get.put(SignUpController());
+
   bool _obscureText = true;
+
   static const IconData arrow_drop_down_circle_outlined = arrowDropdown;
 
   static const IconData location_on = Location;
@@ -37,14 +43,17 @@ class _StudentRegisterState extends State<StudentRegister> {
   final List<String> _dropdownItems = dropDownList;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.classStudies.text = "None";
+    controller.institution.text = "None";
+  }
+
+  @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    nameEditingController.dispose();
-    classEditingController.dispose();
-    locationEditingController.dispose();
-    phoneEditingController.dispose();
-    passwordEditingController.dispose();
   }
 
   @override
@@ -86,13 +95,37 @@ class _StudentRegisterState extends State<StudentRegister> {
                 child: TextFormField(
                   validator: (value) {
                     //value = value.toString();
-                    if (value == null || value.isEmpty) {
-                      return "please enter Full Name";
-                    }
+                    final bool nameValid =
+                        RegExp(r"^[a-zA-Z\s'-]+$").hasMatch(value.toString());
+                    if (nameValid)
+                      return null;
+                    else
+                      return 'Please Provide Your Name Not Anything Else';
+                  },
+                  cursorColor: Colors.grey[900],
+                  controller: controller.fullName,
+                  decoration: inputDecoration,
+                ),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              HeadingText(headingText: "E-Mail"),
+              Container(
+                height: 42,
+                width: 333,
+                decoration: containerDecoration,
+                child: TextFormField(
+                  validator: (value) {
+                    final bool emailValid = RegExp(
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        .hasMatch(value.toString());
+
+                    if (!emailValid) return "A valid format please";
                     return null;
                   },
                   cursorColor: Colors.grey[900],
-                  controller: nameEditingController,
+                  controller: controller.email,
                   decoration: inputDecoration,
                 ),
               ),
@@ -123,10 +156,36 @@ class _StudentRegisterState extends State<StudentRegister> {
                     onSelected: (String selectedItem) {
                       setState(() {
                         _selectedItem = selectedItem;
+                        controller.classStudies.text = _selectedItem;
                       });
                     },
                   )),
-                  controller: TextEditingController(text: _selectedItem ?? ''),
+                  controller: controller.classStudies,
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              HeadingText(headingText: "Instituition"),
+              Container(
+                height: 42,
+                width: 333,
+                decoration: containerDecoration,
+                child: TextFormField(
+                  validator: (value) {
+                    //value = value.toString();
+                    if (value == null || value.isEmpty) {
+                      return "please enter Your Instituition";
+                    }
+                    return null;
+                  },
+                  cursorColor: Colors.grey[900],
+                  controller: controller.institution,
+                  decoration: inputDecoration.copyWith(
+                      prefixIcon: Icon(
+                    Icons.house_outlined,
+                    color: Colors.grey[900],
+                  )),
                 ),
               ),
               SizedBox(
@@ -146,7 +205,7 @@ class _StudentRegisterState extends State<StudentRegister> {
                     return null;
                   },
                   cursorColor: Colors.grey[900],
-                  controller: locationEditingController,
+                  controller: controller.location,
                   decoration: inputDecoration.copyWith(
                       prefixIcon: Icon(
                     location_on,
@@ -165,13 +224,16 @@ class _StudentRegisterState extends State<StudentRegister> {
                 child: TextFormField(
                   validator: (value) {
                     //value = value.toString();
-                    if (value == null || value.isEmpty) {
-                      return "please enter Your Location";
-                    }
+
+                    final bool phnValid =
+                        RegExp(r'(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$')
+                            .hasMatch(value.toString());
+                    if (!phnValid) return "Please Provide The Valid Phone";
+
                     return null;
                   },
                   cursorColor: Colors.grey[900],
-                  controller: phoneEditingController,
+                  controller: controller.phoneNumber,
                   decoration: inputDecoration.copyWith(
                       prefixIcon: Icon(
                     smartphone,
@@ -195,7 +257,7 @@ class _StudentRegisterState extends State<StudentRegister> {
                     return null;
                   },
                   cursorColor: Colors.grey[900],
-                  controller: passwordEditingController,
+                  controller: controller.password,
                   obscureText: _obscureText,
                   decoration: inputDecoration.copyWith(
                       prefixIcon: Icon(
@@ -231,17 +293,36 @@ class _StudentRegisterState extends State<StudentRegister> {
                               0xFF000000),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50.0))),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Done')),
-                      );
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => StudentLandingPage(),
-                        ),
-                      );
+                      try {
+                        AuthenticationRepository.instance.userType.value =
+                            "student";
+
+                        Student signUpStudentData = Student(
+                            id: "new",
+                            fullName: controller.fullName.text.trim(),
+                            location: controller.location.text.trim(),
+                            email: controller.email.text.trim(),
+                            phoneNumber: controller.phoneNumber.text.trim(),
+                            picturePath: "Default",
+                            institution: controller.institution.text.trim(),
+                            classStudies: controller.classStudies.text.trim());
+
+                        SignUpController.instance.registerUser(
+                            controller.email.text.trim(),
+                            controller.password.text.trim(),
+                            signUpStudentData);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Done')),
+                        );
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text(
+                                  'You Messed Up With Credentials!!! Try Again...')),
+                        );
+                      }
                     }
                   },
                   child: Text(

@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:ui_ux/models/advertisement.dart';
 import 'package:ui_ux/models/notification.dart';
-import 'package:ui_ux/models/student.dart';
-import 'package:ui_ux/models/teacher.dart';
+import 'package:ui_ux/models/student2.dart';
+import 'package:ui_ux/models/teacher2.dart';
 
 import '../../../models/offer.dart';
 
@@ -58,7 +58,7 @@ class ApiService {
     }
   }
 
-  Future<List<Student>> fetchMyStudentsForTeacher(String teacherId) async {
+  Future<List<Student2>> fetchMyStudentsForTeacher(String teacherId) async {
     try {
       final response = await http.get(
         Uri.parse('$baseUrl/api/teacher/64d8e7d6b7f46ededc395c1e/myStudents'),
@@ -70,8 +70,8 @@ class ApiService {
 
       if (response.statusCode == 200) {
         List<dynamic> jsonData = jsonDecode(response.body);
-        List<Student> myStudents =
-            jsonData.map((json) => Student.fromJson(json)).toList();
+        List<Student2> myStudents =
+            jsonData.map((json) => Student2.fromJson(json)).toList();
         return myStudents;
       } else {
         throw Exception(
@@ -83,7 +83,7 @@ class ApiService {
   }
 
   //Sani will decide if it's needed or not
-  Future<List<Teacher>> fetchTeacherDetails(String teacherId) async {
+  Future<List<Teacher2>> fetchTeacherDetails(String teacherId) async {
     try {
       final response = await http.get(
         Uri.parse('$baseUrl/api/teacher/64d8e7d6b7f46ededc395c1e/profile'),
@@ -95,8 +95,8 @@ class ApiService {
 
       if (response.statusCode == 200) {
         List<dynamic> jsonData = jsonDecode(response.body);
-        List<Teacher> myDetails =
-            jsonData.map((json) => Teacher.fromJson(json)).toList();
+        List<Teacher2> myDetails =
+            jsonData.map((json) => Teacher2.fromJson(json)).toList();
         return myDetails;
       } else {
         throw Exception(

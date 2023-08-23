@@ -1,10 +1,16 @@
 import 'package:ui_ux/constants/heading_textfield.dart';
 import 'package:ui_ux/constants/icon_constants.dart';
 import 'package:ui_ux/constants/input_decoration.dart';
+import 'package:ui_ux/pages/authenticate/methods/forgot_password_model_button_sheet.dart';
+import 'package:ui_ux/services/authenticate/authentication_repository.dart';
+import 'package:ui_ux/services/authenticate/controllers/student_signin_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:ui_ux/pages/authenticate/student_register.dart';
 import 'package:ui_ux/pages/landing/studentLanding.dart';
+
+import '../../widgets/forgot_password_button.dart';
+import 'package:get/get.dart';
 
 class SignInStudent extends StatefulWidget {
   const SignInStudent({super.key});
@@ -14,8 +20,7 @@ class SignInStudent extends StatefulWidget {
 }
 
 class _SignInStudentState extends State<SignInStudent> {
-  final phoneEditingController = TextEditingController();
-  final passwordEditingController = TextEditingController();
+  final controller = Get.put(StudentSignInController());
   bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
   //final isPassword = false;
@@ -24,8 +29,6 @@ class _SignInStudentState extends State<SignInStudent> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    phoneEditingController.dispose();
-    passwordEditingController.dispose();
   }
 
   @override
@@ -60,24 +63,25 @@ class _SignInStudentState extends State<SignInStudent> {
               SizedBox(
                 height: 40,
               ),
-              HeadingText(headingText: "Phone Number"),
+              HeadingText(headingText: "E-mail"),
               Container(
-                height: 42,
-                width: 322,
+                height: 50,
+                width: 333,
                 decoration: containerDecoration,
                 child: TextFormField(
                   validator: (value) {
-                    //value = value.toString();
-                    if (value == null || value.isEmpty) {
-                      return "please enter phone number";
-                    }
+                    final bool emailValid = RegExp(
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        .hasMatch(value.toString());
+
+                    if (!emailValid) return "A valid format please";
                     return null;
                   },
                   cursorColor: Colors.grey[900],
-                  controller: phoneEditingController,
+                  controller: controller.emailValue,
                   decoration: inputDecoration.copyWith(
                     prefixIcon: Icon(
-                      person_rounded,
+                      Icons.email_rounded,
                       color: Colors.grey[600],
                     ),
                   ),
@@ -88,8 +92,8 @@ class _SignInStudentState extends State<SignInStudent> {
               ),
               HeadingText(headingText: "Password"),
               Container(
-                height: 42,
-                width: 322,
+                height: 50,
+                width: 333,
                 decoration: containerDecoration,
                 child: TextFormField(
                   validator: (value) {
@@ -100,7 +104,7 @@ class _SignInStudentState extends State<SignInStudent> {
                   },
                   cursorColor: Colors.grey[900],
                   obscureText: _obscureText,
-                  controller: passwordEditingController,
+                  controller: controller.passwordValue,
                   decoration: inputDecoration.copyWith(
                       prefixIcon: Icon(
                         key_outlined,
@@ -124,12 +128,31 @@ class _SignInStudentState extends State<SignInStudent> {
                       ),
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
               Container(
                 width: 322,
-                height: 42,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                      onPressed: () {
+                        AuthenticationRepository.instance.userType.value =
+                            "Student";
+
+                        ForgetPasswordScreen.buildShowModalBottomSheet(context);
+                      },
+                      child: const Text(
+                        "Forgot Password?",
+                        style: TextStyle(
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                            color: Colors.black,
+                            decoration: TextDecoration.underline),
+                      )),
+                ),
+              ),
+              Container(
+                width: 333,
+                height: 50,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       primary: Color(
@@ -139,16 +162,20 @@ class _SignInStudentState extends State<SignInStudent> {
                           borderRadius: BorderRadius.circular(50.0))),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Done')),
-                      );
+                      try {
+                        AuthenticationRepository.instance.userType.value =
+                            "student";
+
+                        StudentSignInController.instance
+                            .signInStudentWithEmailAndPassword(
+                                controller.emailValue.text.trim(),
+                                controller.passwordValue.text.trim());
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text("Wrong Credentials!!!")),
+                        );
+                      }
                     }
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => StudentLandingPage(),
-                      ),
-                    );
                   },
                   child: Text(
                     "Sign In",

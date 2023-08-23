@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ui_ux/models/teacher.dart';
+import 'package:ui_ux/models/Student.dart';
+import 'package:ui_ux/models/teacher2.dart';
 import 'package:ui_ux/pages/student/services/student_services.dart';
 import 'package:ui_ux/pages/student/studentNotificationPage.dart';
 import 'package:ui_ux/pages/student/studentRateTeacher.dart';
+import 'package:ui_ux/provider/student_provider.dart';
 import 'package:ui_ux/widgets/student/my_tutors.dart';
 
 class studentMyTutors extends StatefulWidget {
@@ -16,17 +18,23 @@ class studentMyTutors extends StatefulWidget {
 
 class _studentMyTutorsState extends State<studentMyTutors> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  List<Teacher> myTeachers = [];
+  List<Teacher2> myTeachers = [];
+  String picturePath = '';
+  String fullName = '';
+
+  Student? currentStudent = StudentUser.getCurrentStudentUser();
 
   @override
   void initState() {
     super.initState();
+    picturePath = currentStudent!.picturePath;
+    fullName = currentStudent!.fullName;
     fetchMyTeachersForStudent();
   }
 
   Future<void> fetchMyTeachersForStudent() async {
     try {
-      List<Teacher> fetchedMyTeachers = await ApiService()
+      List<Teacher2> fetchedMyTeachers = await ApiService()
           .fetchMyTeachersForStudent("64d9bd2ccfe6020e4cfc8ef3");
       setState(() {
         myTeachers = fetchedMyTeachers;
@@ -54,8 +62,8 @@ class _studentMyTutorsState extends State<studentMyTutors> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Muntasir Mamun',
-              style: TextStyle(fontSize: 18, color: Colors.black),
+              fullName,
+              style: TextStyle(fontSize: 18, color: Colors.black87),
             ),
           ],
         ),

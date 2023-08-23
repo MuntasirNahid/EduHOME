@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:ui_ux/models/advertisement.dart';
-import 'package:ui_ux/models/teacher.dart';
+import 'package:ui_ux/models/teacher2.dart';
 import 'package:ui_ux/pages/student/services/student_services.dart';
 import 'package:ui_ux/widgets/student/applicant_list.dart';
 
@@ -24,7 +24,7 @@ class ApplicantList extends StatefulWidget {
 class _ApplicantListState extends State<ApplicantList> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  List<Teacher> applicants = [];
+  List<Teacher2> applicants = [];
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _ApplicantListState extends State<ApplicantList> {
     try {
       print("We are here");
       print('Advertisement ID: ${widget.advertisement.id}');
-      List<Teacher> fetchedApplicants =
+      List<Teacher2> fetchedApplicants =
           await ApiService().getAllApplicants(widget.advertisement.id);
 
       print('Fetched Applicants: $fetchedApplicants');

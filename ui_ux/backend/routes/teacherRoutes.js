@@ -11,7 +11,7 @@ const {
   getTeacherProfileDetails,
   teacherLogout,
   acceptPendingOffer,
-  updateTeacherProfile,
+  updateTeacher,
   getAllTeachers,
   getFilteredAdvertisement,
   rejectPendingOffer,
@@ -56,6 +56,6 @@ router.post("/:id/pendingOfferRe/:studentId", rejectPendingOffer); // Reject tui
 router.post("/advertisement/apply/:advertisementId", applyForTuition); //apply for advertisement
 
 //UPDATE
-router.patch("/:id/Profile", updateTeacherProfile); // updating profile.
+router.patch("/:id/Profile", updateTeacher); // updating profile.
 
 module.exports = router;

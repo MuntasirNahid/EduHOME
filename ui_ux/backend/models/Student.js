@@ -12,7 +12,7 @@ const studentSchema = new Schema({
   },
 
   classStudies: {
-    type: Number,
+    type: Number, //will be string
     required: true,
   },
   location: {
@@ -26,11 +26,11 @@ const studentSchema = new Schema({
     min: 6,
     max: 12,
   },
-  password: {
-    type: String,
-    required: true,
-    min: 5,
-  },
+  // password: {
+  //   type: String,
+  //   required: true,
+  //   min: 5,
+  // },
   picturePath: {
     type: String,
     default: "",
@@ -49,6 +49,11 @@ const studentSchema = new Schema({
   advertisementId: {
     type: Array,
     default: [],
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
   },
 });
 
