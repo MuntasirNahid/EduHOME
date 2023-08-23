@@ -45,7 +45,7 @@ Follow the step by step installation procedure to install and run this on your m
 1. Clone the repo
 
    ```sh
-   git clone https://github.com/mahirlabibdihan/dEducation-backend.git
+   git clone https://github.com/MuntasirNahid/EduHOME.git
    ```
 
 Then run the following commands to run your app:
