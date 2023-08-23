@@ -17,6 +17,8 @@ EduHOME functions as an educational hub, enabling the seamless connection betwee
   - MongoDB
 - Frontend
     - Flutter
+- UI Design
+    - Figma
 
 
 # DataBase Schema:
@@ -27,25 +29,16 @@ EduHOME functions as an educational hub, enabling the seamless connection betwee
 
 
 <a href="https://youtu.be/o91aPjKT2c0">
-   <img src="https://i.ibb.co/WyH628G/ZZScreenshot-from-2022-10-08-02-11-25.png" alt="https://youtu.be/o91aPjKT2c0"  border="1">
+Youtube
 </a>
 
 
 
 
 
-## Getting Started
+## How to RUN:
 
-Follow the step by step installation procedure to install and run this on your machine
-
-### Prerequisites
-
-Make sure you have node installed in your device.
-
-**`NodeJs`**: Install Nodejs from [here](https://nodejs.org/en/download/)
-
-
-### Installation
+Follow the step by step installation procedure to install and run this on your machine.
 
 #### Getting the repository
 
@@ -55,27 +48,38 @@ Make sure you have node installed in your device.
    git clone https://github.com/mahirlabibdihan/dEducation-backend.git
    ```
 
-2. If you don't have git installed in your device then download zip
+Then run the following commands to run your app:
 
-3. After installation or download go to the repository and open command line.
+### Server Side
+```bash
+  cd backend
+  npm install
+  npm run dev (for continuous development)
+  OR
+  npm start (to run script 1 time)
+```
 
-4. Install NPM packages
+### Client Side
+```bash
+  flutter pub get
+  open a simulator 
+  flutter run
+```
 
-   ```sh
-   npm install
-   ```
 
+## Honourable Supervisor
 
-## Supervisor
-
-- Ayesha Tasmin
+- <a href = https://www.sust.edu/d/cse/faculty-profile-detail/52/4>Ayesha Tasmin </a>
 
   - **Assistant Professor**
 
-    :arrow_forward: **Contact:**
+  
 
-    Department of Computer Science and Engineering
-    Bangladesh University of Engineering and Technology
-    Dhaka-1000, Bangladesh
+    Department of Computer Science and Engineering,
+    Shahjalal University of Science and Technology
+    ,Sylhet, Bangladesh.
+
+- <a href=https://www.linkedin.com/in/ershadin/> Ershadur Rahman Talukder </a>
+  - **Co-Founder** at <a href = https://inverseai.com>Inverse.AI</a>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
