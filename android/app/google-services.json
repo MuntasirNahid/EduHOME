@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "503649949088",
+    "project_id": "eduhome-ec721",
+    "storage_bucket": "eduhome-ec721.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:503649949088:android:e882341a687dfd9827c0c5",
+        "android_client_info": {
+          "package_name": "com.example.eduhome_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "503649949088-4ssc0tjq90s6ghgnnug6h1ra1aqn21ki.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBprAN4M1wSLEg8c9V2xeff5OZUtCxpDeI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "503649949088-4ssc0tjq90s6ghgnnug6h1ra1aqn21ki.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
