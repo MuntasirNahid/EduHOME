@@ -1,10 +1,6 @@
-import 'dart:io';
-
 import 'package:eduhome_project/constants/Colors.dart';
-import 'package:eduhome_project/models/Student.dart';
-import 'package:eduhome_project/pages/authenticate/email_verification.dart';
-import 'package:eduhome_project/pages/landing/studentLanding.dart';
-import 'package:eduhome_project/provider/student_provider.dart';
+import 'package:eduhome_project/models/Teacher.dart';
+import 'package:eduhome_project/provider/teacher_provider.dart';
 import 'package:eduhome_project/services/authenticate/authentication_repository.dart';
 import 'package:eduhome_project/services/data_repository.dart';
 import 'package:eduhome_project/services/storage_repo.dart';
@@ -13,20 +9,26 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:quickalert/quickalert.dart';
 
-class StudentProfileUpdate extends GetxController {
-  static StudentProfileUpdate get instance => Get.find();
+class TeacherProfileUpdate extends GetxController {
+  static TeacherProfileUpdate get instance => Get.find();
 
   final password = TextEditingController();
   final fullName = TextEditingController();
-  final phoneNumber = TextEditingController();
-  final classStudies = TextEditingController();
+  final phoneNo = TextEditingController();
+  final teaches = TextEditingController();
   final location = TextEditingController();
-  final institution = TextEditingController();
+  final gender = TextEditingController();
+  final experience = TextEditingController();
+  final occupation = TextEditingController();
+  final instituition = TextEditingController();
+  final minSalary = TextEditingController();
+  final maxSalary = TextEditingController();
+  final subject = TextEditingController();
   final picturePath = TextEditingController();
 
-  Future<void> updateStudentProfile(Student data) async {
+  Future<void> updateTeacherProfile(Teacher data) async {
     try {
-      await DataRespository.updateStudentData(data);
+      await DataRespository.updateTeacherData(data);
     } catch (e) {
       QuickAlert.show(
           context: Get.context!,
@@ -37,14 +39,14 @@ class StudentProfileUpdate extends GetxController {
     }
   }
 
-  Future<void> updateStudentPassword(String password) async {
+  Future<void> updateTeacherPassword(String password) async {
     try {
       await AuthenticationRepository.instance.updateUserPassword(password);
     } catch (e) {
       QuickAlert.show(
           context: Get.context!,
           type: QuickAlertType.error,
-          text: e.toString(),
+          text: "Updating Password Failed ... contact with developers",
           title: "Error",
           confirmBtnColor: buttonColor);
     }
@@ -54,7 +56,7 @@ class StudentProfileUpdate extends GetxController {
     var downloadUrl = await StorageRepo.instance.uploadFile(
         file, AuthenticationRepository.instance.uid.value.toString());
 
-    StudentUser.currentStudent?.picturePath = downloadUrl;
+    TeacherUser.currentTeacher?.picturePath = downloadUrl;
     print("Image URL :" + downloadUrl);
   }
 }

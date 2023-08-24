@@ -60,7 +60,7 @@ const teacherSchema = new Schema({
     default: [],
   },
   rating: {
-    type: Array,
+    type: [Number],
     default: [],
   },
   minSalary: {

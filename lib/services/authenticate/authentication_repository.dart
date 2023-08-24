@@ -24,6 +24,7 @@ class AuthenticationRepository extends GetxController {
   late final Rx<User?> firebaseUser;
   var verificationId = ''.obs;
   var userType = ''.obs;
+  var uid = ''.obs;
   var userActualType = ''.obs;
 
   @override
@@ -39,8 +40,8 @@ class AuthenticationRepository extends GetxController {
 //setInitialScreen(_auth.currentUser);
   }
 
-  void authReload() {
-    _auth.currentUser?.reload();
+  Future<void> authReload() async {
+    await _auth.currentUser?.reload();
   }
 
   User? getCurrentUser() {
@@ -75,6 +76,12 @@ class AuthenticationRepository extends GetxController {
       String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
+
+      await authReload();
+
+      AuthenticationRepository.instance.uid.value =
+          AuthenticationRepository.instance.getCurrentUser()!.uid.toString();
+
       await AuthenticationRepository.instance.getUserData(email);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -117,6 +124,11 @@ class AuthenticationRepository extends GetxController {
           email: email, password: password);
       await AuthenticationRepository.instance
           .sendUserData(email, userTypeValue);
+      await authReload();
+
+      AuthenticationRepository.instance.uid.value =
+          AuthenticationRepository.instance.getCurrentUser()!.uid.toString();
+
       await AuthenticationRepository.instance.getUserData(email);
     } on FirebaseAuthException catch (e) {
       final ex = SignUpWithEmailAndPasswordFailure.code(e.code);
@@ -222,4 +234,15 @@ class AuthenticationRepository extends GetxController {
   }
 
   Future<void> logout() async => await _auth.signOut();
+
+  Future<void> updateUserPassword(String password) async {
+    User? user = AuthenticationRepository.instance.getCurrentUser();
+
+    try {
+      await user!.updatePassword(password);
+      AuthenticationRepository.instance.authReload();
+    } catch (e) {
+      throw CustomException(e.toString());
+    }
+  }
 }

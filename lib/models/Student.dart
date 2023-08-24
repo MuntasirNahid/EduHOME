@@ -6,7 +6,7 @@ class Student {
   final String location;
   final String email;
   final String phoneNumber;
-  late final String picturePath;
+  String? picturePath;
   final String institution;
 
   final String classStudies;
@@ -17,7 +17,7 @@ class Student {
     required this.location,
     required this.email,
     required this.phoneNumber,
-    required this.picturePath,
+    this.picturePath,
     required this.institution,
     required this.classStudies,
   });

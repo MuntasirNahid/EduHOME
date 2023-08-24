@@ -2,6 +2,7 @@ import 'package:eduhome_project/constants/Colors.dart';
 import 'package:eduhome_project/constants/dropdown_list.dart';
 import 'package:eduhome_project/constants/heading_textfield.dart';
 import 'package:eduhome_project/constants/icon_constants.dart';
+import 'package:eduhome_project/constants/images.dart';
 import 'package:eduhome_project/constants/input_decoration.dart';
 import 'package:eduhome_project/models/Student.dart';
 import 'package:eduhome_project/pages/authenticate/email_verification.dart';
@@ -305,7 +306,7 @@ class _StudentRegisterState extends State<StudentRegister> {
                             location: controller.location.text.trim(),
                             email: controller.email.text.trim(),
                             phoneNumber: controller.phoneNumber.text.trim(),
-                            picturePath: "Default",
+                            picturePath: studentImage,
                             institution: controller.institution.text.trim(),
                             classStudies: controller.classStudies.text.trim());
 

@@ -202,4 +202,41 @@ class DataRespository {
       throw CustomException("Something went wrong in server");
     }
   }
+
+  static Future<void> updateTeacherData(Teacher teacherData) async {
+    final url = Uri.parse('http://${ip}:4000/users/updateTeacherProfile');
+    final headers = <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+    final data = teacherData.toJson();
+
+    try {
+      var response = await http.post(
+        url,
+        headers: headers,
+        body: data,
+      );
+
+      if (response.statusCode == 200) {
+        var responseData = await jsonDecode(response.body);
+        TeacherUser.currentTeacher = new Teacher(
+            id: responseData['_id'],
+            fullName: responseData['fullName'],
+            gender: responseData['gender'],
+            experience: responseData['experience'],
+            location: responseData['location'],
+            email: responseData['email'],
+            phoneNumber: responseData['phoneNumber'],
+            occupation: responseData['occupation'],
+            institution: responseData['institution'],
+            subject: responseData['subject'],
+            picturePath: responseData['picturePath'],
+            teachingSubject: responseData['teachingSubject'].join(","),
+            minSalary: responseData['minSalary'],
+            maxSalary: responseData['maxSalary']);
+      }
+    } catch (e) {
+      throw CustomException("Something went wrong in server");
+    }
+  }
 }

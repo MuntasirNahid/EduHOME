@@ -29,13 +29,6 @@
             {
               "client_id": "503649949088-4ssc0tjq90s6ghgnnug6h1ra1aqn21ki.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "503649949088-tcp06q2oeatq5tki5k6np4t3na9trl52.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.eduhomeProject"
-              }
             }
           ]
         }

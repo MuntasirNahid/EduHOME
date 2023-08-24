@@ -16,7 +16,7 @@ const studentSchema = new Schema({
   },
 
   classStudies: {
-    type: String,
+    type: String,  //change it 
     required: true,
   },
   location: {

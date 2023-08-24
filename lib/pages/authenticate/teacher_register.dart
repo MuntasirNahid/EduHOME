@@ -1,4 +1,5 @@
 import 'package:eduhome_project/constants/dropdown_list.dart';
+import 'package:eduhome_project/constants/images.dart';
 import 'package:eduhome_project/models/Teacher.dart';
 import 'package:eduhome_project/pages/authenticate/signInTeacher.dart';
 import 'package:eduhome_project/pages/landing/teacherLanding.dart';
@@ -581,7 +582,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                               occupation: controller.occupation.text.trim(),
                               institution: controller.instituition.text.trim(),
                               subject: controller.subject.text.trim(),
-                              picturePath: "Default Picture",
+                              picturePath: teacherImage,
                               teachingSubject: controller.teaches.text.trim(),
                               minSalary: controller.minSalary.text.trim(),
                               maxSalary: controller.maxSalary.text.trim());

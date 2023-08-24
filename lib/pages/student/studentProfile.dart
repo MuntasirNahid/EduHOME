@@ -101,24 +101,41 @@ class _UpdateStudentProfileState extends State<UpdateStudentProfile> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      GestureDetector(
-                        onTap: () async {
-                          XFile? image = await picker.pickImage(
-                              source: ImageSource.gallery);
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                currentStudent!.picturePath.toString()),
+                            radius: 50,
+                          ),
+                          Positioned(
+                            bottom:
+                                5, // Adjust this value to position the container vertically
+                            right:
+                                10, // Adjust this value to position the container horizontally
+                            child: GestureDetector(
+                              onTap: () async {
+                                XFile? image = await picker.pickImage(
+                                    source: ImageSource.gallery);
 
-                          await StudentProfileUpdate.instance
-                              .uploadProfilePicture(image as XFile);
+                                await StudentProfileUpdate.instance
+                                    .uploadProfilePicture(image as XFile);
 
-                          setState(() {
-                            currentStudent!.picturePath =
-                                StudentUser.currentStudent!.picturePath;
-                          });
-                        },
-                        child: CircleAvatar(
-                          minRadius: 50,
-                          backgroundImage: NetworkImage(
-                              currentStudent!.picturePath.toString()),
-                        ),
+                                setState(() {
+                                  currentStudent!.picturePath =
+                                      StudentUser.currentStudent!.picturePath;
+                                  controller.picturePath.text =
+                                      currentStudent!.picturePath!;
+                                });
+                              },
+                              child: Icon(
+                                FontAwesomeIcons.camera,
+                                color: Colors.lightGreen,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -319,7 +336,8 @@ class _UpdateStudentProfileState extends State<UpdateStudentProfile> {
                               institution: controller.institution.text.trim(),
                               classStudies:
                                   controller.classStudies.text.trim());
-
+                          await StudentProfileUpdate.instance
+                              .updateStudentPassword(controller.password.text);
                           await StudentProfileUpdate.instance
                               .updateStudentProfile(updateStudentData);
 

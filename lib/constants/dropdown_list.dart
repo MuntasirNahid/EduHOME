@@ -37,6 +37,7 @@ const experienceDropdownList = [
   'More'
 ];
 const institutionList = [
+  'None',
   'SUST',
   'CUET',
   'BUET',
@@ -69,4 +70,14 @@ const salaryList = [
   '17000',
   '17000+'
 ];
-const subjectList = ['CSE', 'EEE', 'ETC', "ME", "BME", "CE", "PME", "CEP"];
+const subjectList = [
+  'None',
+  'CSE',
+  'EEE',
+  'ETC',
+  "ME",
+  "BME",
+  "CE",
+  "PME",
+  "CEP"
+];

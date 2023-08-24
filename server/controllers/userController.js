@@ -95,7 +95,7 @@ const getTeacherData = async (req, res) => {
     const user = await teacherSchema.find({ email });
 
     res.status(200).json(user);
-    res.status(200).json(response);
+    // res.status(200).json(response);
   } catch (e) {
     res.status(500).json({ error: e.toString() });
   }

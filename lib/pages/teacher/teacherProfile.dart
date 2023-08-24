@@ -1,45 +1,29 @@
+import 'package:eduhome_project/constants/Colors.dart';
 import 'package:eduhome_project/constants/dropdown_list.dart';
 import 'package:eduhome_project/constants/heading_textfield.dart';
 import 'package:eduhome_project/constants/icon_constants.dart';
 import 'package:eduhome_project/constants/input_decoration.dart';
 import 'package:eduhome_project/constants/profile.dart';
+import 'package:eduhome_project/models/Student.dart';
+import 'package:eduhome_project/models/Teacher.dart';
 import 'package:eduhome_project/pages/landing/landingPage.dart';
+import 'package:eduhome_project/provider/teacher_provider.dart';
 import 'package:eduhome_project/services/authenticate/authentication_repository.dart';
 import 'package:eduhome_project/services/authenticate/controllers/logout_controller.dart';
+import 'package:eduhome_project/services/profileupdate/controller/teacher_profile_update_controller.dart';
+import 'package:eduhome_project/widgets/custom_dropdown.dart';
+import 'package:eduhome_project/widgets/custom_dropdown2.dart';
 import 'package:eduhome_project/widgets/teacher_subject_salary.dart';
 import 'package:eduhome_project/widgets/update_drop_down_field.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class UpdateTeacherProfile extends StatefulWidget {
   UpdateTeacherProfile({super.key});
-
-  var userDetails = Profile(
-      fullName: "Muntasir",
-      gender: "Male",
-      experiance: 2,
-      location: "Chadpur",
-      phn: "+88011545542",
-      occupation: "Student",
-      instituition: "SUST",
-      minSalary: "30000",
-      maxSalary: "50000",
-      subjects: "CSE");
-//fullName,
-//gender
-//experience
-//location
-//email
-//phoneNumber
-//occupation
-//instituition
-//subject
-//picturePath
-//teachingSubject
-//rating
-//minSalary
-//maxSalary
-//studentId
 
   @override
   State<UpdateTeacherProfile> createState() => _UpdateTeacherProfileState();
@@ -47,25 +31,12 @@ class UpdateTeacherProfile extends StatefulWidget {
 
 class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
   final _formKey = GlobalKey<FormState>();
-  late TextEditingController nameEditingController;
-  final TextEditingController classEditingController = TextEditingController();
-  final teachesEditingController = TextEditingController();
-  late TextEditingController locationEditingController;
-  late TextEditingController phoneEditingController;
-  final TextEditingController passwordEditingController =
-      TextEditingController();
 
-  @override
-  void initState() {
-    nameEditingController =
-        TextEditingController(text: widget.userDetails.fullName);
-    locationEditingController =
-        TextEditingController(text: widget.userDetails.location);
-    phoneEditingController =
-        TextEditingController(text: widget.userDetails.phn);
-    // TODO: implement initState
-    super.initState();
-  }
+  final controller = Get.put(TeacherProfileUpdate());
+
+  Teacher? currentTeacher = TeacherUser.getCurrentTeacherUser();
+
+  final ImagePicker picker = ImagePicker();
 
   late String fullName = ""; // userDetails.fullName;
   late String genderInput = ""; //userDetails.gender;
@@ -73,36 +44,63 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
   late String occupationInput = ""; //userDetails.occupation;
   late String instituteInput = ""; //userDetails.instituition;
   late bool _obscureText = true;
-  late bool isStudent = true; //userDetails.occupation == "Student"?true:false;
+  late bool isStudent = (currentTeacher!.occupation ==
+      "Student"); //userDetails.occupation == "Student"?true:false;
 
   late String minInput = ""; //userDetails.minSalary;
   late String maxInput = ""; //userDetails.maxSalary;
   late String subjectInput = ""; //userDetails.subjects;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if (currentTeacher != null) {
+      controller.fullName.text = currentTeacher!.fullName;
+      controller.phoneNo.text = currentTeacher!.phoneNumber;
+
+      controller.teaches.text = currentTeacher!.teachingSubject;
+      controller.location.text = currentTeacher!.location;
+      controller.gender.text = currentTeacher!.gender;
+      controller.experience.text = currentTeacher!.experience;
+      controller.occupation.text = currentTeacher!.occupation;
+      controller.instituition.text = currentTeacher!.institution;
+      controller.minSalary.text = currentTeacher!.minSalary;
+      controller.maxSalary.text = currentTeacher!.maxSalary;
+      controller.subject.text = currentTeacher!.subject;
+    }
+  }
+
   void handleSubject(String value) {
     setState(() {
       subjectInput = value;
+      controller.subject.text = value;
     });
   }
 
   void handleMin(String value) {
     setState(() {
       minInput = value;
+      controller.minSalary.text = value;
     });
   }
 
   void handleMax(String value) {
     setState(() {
       maxInput = value;
+      controller.maxSalary.text = value;
     });
   }
 
   void handleOccupation(String value) {
     setState(() {
       occupationInput = value;
+      controller.occupation.text = value;
       if (occupationInput == 'Student') {
         isStudent = true;
       } else {
+        controller.subject.text = 'None';
         isStudent = false;
       }
     });
@@ -111,18 +109,21 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
   void handleInstitute(String value) {
     setState(() {
       instituteInput = value;
+      controller.instituition.text = value;
     });
   }
 
   void handleGender(String value) {
     setState(() {
       genderInput = value;
+      controller.gender.text = value;
     });
   }
 
   void handleExperience(String value) {
     setState(() {
       experienceInput = value;
+      controller.experience.text = value;
     });
   }
 
@@ -169,11 +170,42 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircleAvatar(
-                        minRadius: 50,
-                        backgroundImage: NetworkImage(
-                            'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80'),
-                      )
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                currentTeacher!.picturePath.toString()),
+                            radius: 50,
+                          ),
+                          Positioned(
+                            bottom:
+                                5, // Adjust this value to position the container vertically
+                            right:
+                                10, // Adjust this value to position the container horizontally
+                            child: GestureDetector(
+                              onTap: () async {
+                                XFile? image = await picker.pickImage(
+                                    source: ImageSource.gallery);
+
+                                await TeacherProfileUpdate.instance
+                                    .uploadProfilePicture(image as XFile);
+
+                                setState(() {
+                                  currentTeacher!.picturePath =
+                                      TeacherUser.currentTeacher!.picturePath;
+                                  controller.picturePath.text =
+                                      currentTeacher!.picturePath!;
+                                });
+                              },
+                              child: Icon(
+                                FontAwesomeIcons.camera,
+                                color: Colors.lightGreen,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -188,13 +220,15 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                       // initialValue: fullName,
                       validator: (value) {
                         //value = value.toString();
-                        if (value == null || value.isEmpty) {
-                          return "please enter Full Name";
-                        }
-                        return null;
+                        final bool nameValid = RegExp(r"^[a-zA-Z\s'-]+$")
+                            .hasMatch(value.toString());
+                        if (nameValid)
+                          return null;
+                        else
+                          return 'Please Provide Your Name Not Anything Else';
                       },
                       cursorColor: Colors.grey[900],
-                      controller: nameEditingController,
+                      controller: controller.fullName,
                       decoration: inputDecoration,
                     ),
                   ),
@@ -225,7 +259,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                               ),
                             ),
                             CustomDropDownButton1(
-                              value: widget.userDetails.gender,
+                              value: controller.gender.text,
                               items: genderDropDownList.map((valueItem) {
                                 return DropdownMenuItem(
                                   value: valueItem,
@@ -243,7 +277,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                               alignment: Alignment.topLeft,
                               width: 145,
                               child: Text(
-                                "Experiance",
+                                "Experience",
                                 style: TextStyle(
                                   fontFamily: "Poppins",
                                   fontSize: 15,
@@ -253,8 +287,8 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                               ),
                             ),
                             CustomDropDownButton1(
-                              value:
-                                  "2", //widget.userDetails.experiance.toString(),
+                              value: controller.experience
+                                  .text, //widget.userDetails.experiance.toString(),
                               items: experienceDropdownList.map((valueItem) {
                                 return DropdownMenuItem(
                                   value: valueItem,
@@ -286,7 +320,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                         return null;
                       },
                       cursorColor: Colors.grey[900],
-                      controller: locationEditingController,
+                      controller: controller.location,
                       decoration: inputDecoration.copyWith(
                           prefixIcon: Icon(
                         location_on,
@@ -304,14 +338,15 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                     decoration: containerDecoration,
                     child: TextFormField(
                       validator: (value) {
-                        //value = value.toString();
-                        if (value == null || value.isEmpty) {
-                          return "please enter the subjects you teach";
-                        }
+                        final bool subjectValid =
+                            RegExp(r'^[\w\s]+(,[\w\s]+)*$')
+                                .hasMatch(value.toString());
+                        if (!subjectValid)
+                          return "Please Provide The Format: Phy,Math,Chem....";
                         return null;
                       },
                       cursorColor: Colors.grey[900],
-                      controller: teachesEditingController,
+                      controller: controller.teaches,
                       decoration: inputDecoration.copyWith(
                           prefixIcon: Icon(
                         Icons.book_rounded,
@@ -331,13 +366,16 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                     child: TextFormField(
                       validator: (value) {
                         //value = value.toString();
-                        if (value == null || value.isEmpty) {
-                          return "please enter Your Location";
-                        }
+
+                        final bool phnValid = RegExp(
+                                r'(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$')
+                            .hasMatch(value.toString());
+                        if (!phnValid) return "Please Provide The Valid Phone";
+
                         return null;
                       },
                       cursorColor: Colors.grey[900],
-                      controller: phoneEditingController,
+                      controller: controller.phoneNo,
                       decoration: inputDecoration.copyWith(
                           prefixIcon: Icon(
                         smartphone,
@@ -363,7 +401,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                         return null;
                       },
                       cursorColor: Colors.grey[900],
-                      controller: passwordEditingController,
+                      controller: controller.password,
                       obscureText: _obscureText,
                       decoration: inputDecoration.copyWith(
                           prefixIcon: Icon(
@@ -413,7 +451,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                               ),
                             ),
                             CustomDropDownButton1(
-                              value: widget.userDetails.occupation,
+                              value: controller.occupation.text,
                               items: occupationList.map((valueItem) {
                                 return DropdownMenuItem(
                                   value: valueItem,
@@ -441,7 +479,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                               ),
                             ),
                             CustomDropDownButton1(
-                              value: widget.userDetails.instituition,
+                              value: controller.instituition.text,
                               items: institutionList.map((valueItem) {
                                 return DropdownMenuItem(
                                   value: valueItem,
@@ -460,85 +498,17 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                     height: 5,
                   ),
 
-                  Container(
-                    width: 333,
-                    child: isStudent
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Column(
-                                children: [
-                                  Container(
-                                    alignment: Alignment.topLeft,
-                                    width: 145,
-                                    child: Text(
-                                      "Subject",
-                                      style: TextStyle(
-                                        fontFamily: "Poppins",
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                      textAlign: TextAlign.left,
-                                    ),
-                                  ),
-                                  CustomDropDownButton1(
-                                    value: widget.userDetails.subjects,
-                                    items: subjectList.map((valueItem) {
-                                      return DropdownMenuItem(
-                                        value: valueItem,
-                                        child: Text(valueItem),
-                                      );
-                                    }).toList(),
-                                    iconData: Icons.class_outlined,
-                                    onChangeFunctionality: handleSubject,
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  Container(
-                                    alignment: Alignment.topLeft,
-                                    width: 145,
-                                    child: Text(
-                                      "Expected Salary",
-                                      style: TextStyle(
-                                        fontFamily: "Poppins",
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                      textAlign: TextAlign.left,
-                                    ),
-                                  ),
-                                  Row(
-                                    // mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      SubjectSalary(
-                                        salaryWidth: 80,
-                                        hintText: "Min",
-                                        onChangeFunctionality: handleMin,
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      SubjectSalary(
-                                        salaryWidth: 80,
-                                        hintText: "Max",
-                                        onChangeFunctionality: handleMax,
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )
-                        : Column(
-                            children: [
-                              Container(
-                                alignment: Alignment.topLeft,
-                                width: 310,
+                  isStudent
+                      ? Column(
+                          children: [
+                            Container(
+                              alignment: Alignment.topLeft,
+                              width: 333,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(12.0, 0, 0, 0),
                                 child: Text(
-                                  "Expected Salary",
+                                  "Subject",
                                   style: TextStyle(
                                     fontFamily: "Poppins",
                                     fontSize: 15,
@@ -547,30 +517,177 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                                   textAlign: TextAlign.left,
                                 ),
                               ),
-                              Row(
-                                // mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: isStudent
-                                    ? MainAxisAlignment.end
-                                    : MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  SubjectSalary(
-                                    salaryWidth: 160,
-                                    hintText: "Min",
-                                    onChangeFunctionality: handleMin,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  SubjectSalary(
-                                    salaryWidth: 160,
-                                    hintText: "Max",
-                                    onChangeFunctionality: handleMax,
-                                  )
-                                ],
-                              ),
-                            ],
-                          ), ////HERE
+                            ),
+                            CustomDropDownButton2(
+                              value: controller.subject.text,
+                              items: subjectList.map((valueItem) {
+                                return DropdownMenuItem(
+                                  value: valueItem,
+                                  child: Text(valueItem),
+                                );
+                              }).toList(),
+                              iconData: FontAwesomeIcons.book,
+                              onChangeFunctionality: handleSubject,
+                            ),
+                          ],
+                        )
+                      : SizedBox(
+                          height: 1,
+                        ),
+
+                  SizedBox(
+                    height: 5,
                   ),
+
+                  Container(
+                      width: 333,
+                      child: Column(
+                        children: [
+                          Container(
+                            alignment: Alignment.topLeft,
+                            width: 310,
+                            child: Text(
+                              "Expected Salary",
+                              style: TextStyle(
+                                fontFamily: "Poppins",
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                          Row(
+                            // mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: isStudent
+                                ? MainAxisAlignment.end
+                                : MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SubjectSalary(
+                                salaryWidth: 160,
+                                hintText: "Min",
+                                onChangeFunctionality: handleMin,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              SubjectSalary(
+                                salaryWidth: 160,
+                                hintText: "Max",
+                                onChangeFunctionality: handleMax,
+                              )
+                            ],
+                          ),
+                        ],
+                      )
+                      //////// // ? Column(
+                      //     children: [
+                      //       Container(
+                      //         alignment: Alignment.topLeft,
+                      //         width: 310,
+                      //         child: Text(
+                      //           "Expected Salary",
+                      //           style: TextStyle(
+                      //             fontFamily: "Poppins",
+                      //             fontSize: 15,
+                      //             fontWeight: FontWeight.w400,
+                      //           ),
+                      //           textAlign: TextAlign.left,
+                      //         ),
+                      //       ),
+                      //       Row(
+                      //         // mainAxisSize: MainAxisSize.max,
+                      //         mainAxisAlignment: isStudent
+                      //             ? MainAxisAlignment.end
+                      //             : MainAxisAlignment.spaceEvenly,
+                      //         children: [
+                      //           SubjectSalary(
+                      //             salaryWidth: 160,
+                      //             hintText: "Min",
+                      //             onChangeFunctionality: handleMin,
+                      //           ),
+                      //           SizedBox(
+                      //             width: 5,
+                      //           ),
+                      //           SubjectSalary(
+                      //             salaryWidth: 160,
+                      //             hintText: "Max",
+                      //             onChangeFunctionality: handleMax,
+                      //           )
+                      //         ],
+                      ///////////////       ),
+                      //     ],
+                      //   )
+                      //Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //     children: [
+                      //       Column(
+                      //         children: [
+                      //           Container(
+                      //             alignment: Alignment.topLeft,
+                      //             width: 145,
+                      //             child: Text(
+                      //               "Subject",
+                      //               style: TextStyle(
+                      //                 fontFamily: "Poppins",
+                      //                 fontSize: 15,
+                      //                 fontWeight: FontWeight.w400,
+                      //               ),
+                      //               textAlign: TextAlign.left,
+                      //             ),
+                      //           ),
+                      //           CustomDropDownButton1(
+                      //             value: controller.subject.text,
+                      //             items: subjectList.map((valueItem) {
+                      //               return DropdownMenuItem(
+                      //                 value: valueItem,
+                      //                 child: Text(valueItem),
+                      //               );
+                      //             }).toList(),
+                      //             iconData: Icons.class_outlined,
+                      //             onChangeFunctionality: handleSubject,
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       Column(
+                      //         children: [
+                      //           Container(
+                      //             alignment: Alignment.topLeft,
+                      //             width: 145,
+                      //             child: Text(
+                      //               "Expected Salary",
+                      //               style: TextStyle(
+                      //                 fontFamily: "Poppins",
+                      //                 fontSize: 15,
+                      //                 fontWeight: FontWeight.w400,
+                      //               ),
+                      //               textAlign: TextAlign.left,
+                      //             ),
+                      //           ),
+                      //           Row(
+                      //             // mainAxisSize: MainAxisSize.max,
+                      //             mainAxisAlignment: MainAxisAlignment.end,
+                      //             children: [
+                      //               SubjectSalary(
+                      //                 salaryWidth: 80,
+                      //                 hintText: "Min",
+                      //                 onChangeFunctionality: handleMin,
+                      //               ),
+                      //               SizedBox(
+                      //                 width: 5,
+                      //               ),
+                      //               SubjectSalary(
+                      //                 salaryWidth: 80,
+                      //                 hintText: "Max",
+                      //                 onChangeFunctionality: handleMax,
+                      //               )
+                      //             ],
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ],
+                      //   )
+                      //  : , //Column
+                      ),
                   SizedBox(
                     height: 10,
                   ),
@@ -585,14 +702,42 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                                   0xFF000000),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50.0))),
-                      onPressed: () {
+                      onPressed: () async {
                         //print(genderInput);
                         // print(minInput);
                         // print(maxInput);
                         if (_formKey.currentState!.validate()) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Done')),
-                          );
+                          Teacher data = new Teacher(
+                              id: currentTeacher!.id,
+                              fullName: controller.fullName.text.trim(),
+                              gender: controller.gender.text.trim(),
+                              experience: controller.experience.text.trim(),
+                              location: controller.location.text.trim(),
+                              email: currentTeacher!.email.toString(),
+                              phoneNumber: controller.phoneNo.text.trim(),
+                              occupation: controller.occupation.text.trim(),
+                              institution: controller.instituition.text.trim(),
+                              picturePath: controller.picturePath.text.trim(),
+                              subject: controller.subject.text.trim(),
+                              teachingSubject: controller.teaches.text.trim(),
+                              minSalary: controller.minSalary.text.trim(),
+                              maxSalary: controller.maxSalary.text.trim());
+
+                          await TeacherProfileUpdate.instance
+                              .updateTeacherPassword(
+                                  controller.password.text.trim());
+
+                          await TeacherProfileUpdate.instance
+                              .updateTeacherProfile(data);
+
+                          //   await TeacherProfileUpdate.instance.updateTeacherProfile( data);
+
+                          QuickAlert.show(
+                              context: context,
+                              type: QuickAlertType.success,
+                              title: "Update Done",
+                              confirmBtnColor: buttonColor,
+                              text: "Profile Successfully Updated");
                         }
                       },
                       child: Text(
