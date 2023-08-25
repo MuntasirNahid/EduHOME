@@ -19,10 +19,16 @@ const fetchTutors = async (req, res) => {
     let subjectsArray;
 
     let locationPattern;
+    let experienceValue;
     let minSalaryValue, maxSalaryValue;
 
     if (gender) query.gender = gender;
-    if (experience) query.experience = experience;
+    if (experience) {
+      experienceValue = parseInt(experience, 10);
+      query.$expr = {
+        $lte: [{ $toInt: "$experience" }, experienceValue]
+      }
+    };
 
     if (minSalary) {
       minSalaryValue = parseInt(minSalary, 10);
