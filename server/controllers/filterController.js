@@ -25,8 +25,16 @@ const fetchTutors = async (req, res) => {
     if (gender) query.gender = gender;
     if (experience) {
       experienceValue = parseInt(experience, 10);
-      query.$expr = {
-        $lte: [{ $toInt: "$experience" }, experienceValue]
+
+      if (experience == "5") {
+        query.$expr = {
+          $gte: [{ $toInt: "$experience" }, experienceValue]
+        }
+      }
+      else {
+        query.$expr = {
+          $lte: [{ $toInt: "$experience" }, experienceValue]
+        }
       }
     };
 
