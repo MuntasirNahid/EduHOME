@@ -1,10 +1,13 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:http/http.dart';
 import 'package:ui_ux/constants/dropdown_list.dart';
 import 'package:ui_ux/constants/input_decoration.dart';
+import 'package:ui_ux/models/Student.dart';
 import 'package:ui_ux/models/advertisement.dart';
 import 'package:ui_ux/pages/student/services/student_services.dart';
 import 'package:ui_ux/pages/student/studentNotificationPage.dart';
 import 'package:ui_ux/pages/student/studentPreviousPosts.dart';
+import 'package:ui_ux/provider/student_provider.dart';
 import 'package:ui_ux/widgets/custom_dropdown_for_post_tuition.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +20,20 @@ class TuitionPostPage extends StatefulWidget {
 
 class _TuitionPostPageState extends State<TuitionPostPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  String picturePath = '';
+  String fullName = '';
+  String studentId = '';
+
+  Student? currentStudent = StudentUser.getCurrentStudentUser();
+  @override
+  void initState() {
+    super.initState();
+    picturePath = currentStudent!.picturePath;
+    fullName = currentStudent!.fullName;
+    studentId = currentStudent!.id;
+  }
+
   final List<String> tuitionType = ["Offline", "Online"];
   final tuitionTypeController = TextEditingController();
   final List<String> classOfTuition = [
@@ -92,21 +109,33 @@ class _TuitionPostPageState extends State<TuitionPostPage> {
       salary: int.parse(selectedSalary),
       subjects: subjectEditingController.text,
       location: locationEditingController.text,
-      studentId:
-          '64d9bd2ccfe6020e4cfc8ef3', // Replace with the actual student ID
+      studentId: studentId,
+      // Replace with the actual student ID
       teacherId: [], // You can initialize this as an empty list
       booked: false,
       applied: false,
     );
 
     final apiService = ApiService();
-    final response =
-        await apiService.postTuitionAdvertisement(advertisementData);
+    final response = await apiService.postTuitionAdvertisement(
+      advertisementData,
+      studentId,
+    );
 
     if (response.isNotEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Advertisement posted successfully')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(content: Text('Advertisement posted successfully')),
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.topSlide,
+        showCloseIcon: true,
+        title: "Success",
+        desc: "Advertisement Posted Successfully",
+        btnOkOnPress: () {
+          // _onButtonPressed();
+        },
+      ).show();
 
       setState(() {
         advertisementData.id = response['_id'];
@@ -130,7 +159,9 @@ class _TuitionPostPageState extends State<TuitionPostPage> {
           padding: const EdgeInsets.only(top: 8.0, left: 10),
           child: CircleAvatar(
             backgroundImage: NetworkImage(
-                'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80'),
+              picturePath,
+              //'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
+            ),
           ),
         ),
         title: Column(
@@ -141,7 +172,8 @@ class _TuitionPostPageState extends State<TuitionPostPage> {
               style: TextStyle(color: Colors.black),
             ),
             Text(
-              'Muntasir Mamun',
+              fullName,
+              // 'Muntasir Mamun',
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ],

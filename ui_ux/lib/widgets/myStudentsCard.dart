@@ -29,7 +29,7 @@ class MyStudentCard extends StatelessWidget {
         children: [
           Container(
             width: 70,
-            height: 90,
+            height: 100,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.black,
@@ -67,6 +67,7 @@ class MyStudentCard extends StatelessWidget {
                       fontWeight: FontWeight.normal,
                       color: Colors.black,
                       fontSize: 13,
+                      fontFamily: "Poppins",
                     ),
                   ),
                 ],
@@ -86,6 +87,7 @@ class MyStudentCard extends StatelessWidget {
                       fontWeight: FontWeight.normal,
                       color: Colors.black,
                       fontSize: 13,
+                      fontFamily: "Poppins",
                     ),
                   ),
                 ],
@@ -106,6 +108,7 @@ class MyStudentCard extends StatelessWidget {
                       fontWeight: FontWeight.normal,
                       color: Colors.black,
                       fontSize: 13,
+                      fontFamily: "Poppins",
                     ),
                   ),
                 ],

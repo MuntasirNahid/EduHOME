@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class TuitionOfferCard extends StatelessWidget {
   final String studentName;
+  final String picturePath;
   final int studentClass;
   final String location;
   final String note;
@@ -10,6 +11,7 @@ class TuitionOfferCard extends StatelessWidget {
 
   TuitionOfferCard({
     required this.studentName,
+    required this.picturePath,
     required this.studentClass,
     required this.location,
     required this.note,
@@ -34,7 +36,8 @@ class TuitionOfferCard extends StatelessWidget {
             Center(
               child: CircleAvatar(
                 backgroundImage: NetworkImage(
-                  'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
+                  picturePath,
+                  //  'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
                 ),
                 radius: 25,
               ),

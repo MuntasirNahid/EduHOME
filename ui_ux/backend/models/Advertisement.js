@@ -48,8 +48,8 @@ const advertisementSchema = new Schema({
     required: false,
   },
   applied: {
-    type: String,
-    required: false,
+    type: Boolean,
+    default: false,
   },
 });
 

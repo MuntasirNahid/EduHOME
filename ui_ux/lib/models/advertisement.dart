@@ -39,11 +39,10 @@ class Advertisement {
       location: json['location'],
       studentId: json['studentId'],
       teacherId: List<String>.from(json['teacherId']),
-      booked: json['booked'] == 'false',
-      applied: false,
+      booked: json['booked'],
+      applied: json['applied'],
     );
   }
-
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {

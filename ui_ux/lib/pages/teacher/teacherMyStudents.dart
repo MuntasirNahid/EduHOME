@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ui_ux/models/Teacher.dart';
 import 'package:ui_ux/models/student2.dart';
 import 'package:ui_ux/pages/teacher/services/teacher_services.dart';
 import 'package:ui_ux/pages/teacher/teacherNotification.dart';
+import 'package:ui_ux/provider/teacher_provider.dart';
 import 'package:ui_ux/widgets/myStudentsCard.dart';
 
 class teacherMyStudents extends StatefulWidget {
@@ -17,17 +19,25 @@ class _teacherMyStudentsState extends State<teacherMyStudents> {
 
   List<Student2> myStudents = [];
 
+  String picturePath = '';
+  String fullName = '';
+  String teacherId = '';
+
+  Teacher? currentTeacher = TeacherUser.getCurrentTeacherUser();
+
   @override
   void initState() {
     super.initState();
+    fullName = currentTeacher!.fullName;
+    picturePath = currentTeacher!.picturePath;
+    teacherId = currentTeacher!.id;
     fetchMyStudentsForTeacher();
   }
 
   Future<void> fetchMyStudentsForTeacher() async {
     try {
       List<Student2> fetchedMyStudents = await ApiService()
-          .fetchMyStudentsForTeacher(
-              "64d8e7d6b7f46ededc395c1e"); //giving teacherID
+          .fetchMyStudentsForTeacher('$teacherId'); //giving teacherID
       setState(() {
         myStudents = fetchedMyStudents;
       });
@@ -47,14 +57,20 @@ class _teacherMyStudentsState extends State<teacherMyStudents> {
           padding: const EdgeInsets.only(top: 8.0, left: 10),
           child: CircleAvatar(
             backgroundImage: NetworkImage(
-                'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80'),
+              picturePath,
+              //  'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
+            ),
           ),
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Mahir Labib',
+              "Hola!",
+              style: TextStyle(fontSize: 18, color: Colors.black),
+            ),
+            Text(
+              fullName,
               style: TextStyle(fontSize: 18, color: Colors.black),
             ),
           ],
@@ -89,10 +105,12 @@ class _teacherMyStudentsState extends State<teacherMyStudents> {
               child: Text(
                 'My Students',
                 style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 23,
-                    decoration: TextDecoration.underline),
+                  color: Colors.black,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 23,
+                  decoration: TextDecoration.underline,
+                  //  fontFamily: "Poppins",
+                ),
               ),
             ),
             SizedBox(
@@ -106,8 +124,8 @@ class _teacherMyStudentsState extends State<teacherMyStudents> {
                     classNumber: student.classStudies,
                     phoneNumber: student.phoneNumber,
                     location: student.location,
-                    imageUrl:
-                        'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
+                    imageUrl: student.picturePath,
+                    //     'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
                     // image: student.picturePath.isNotEmpty
                     //     ? NetworkImage(student.picturePath)
                     //     : null,

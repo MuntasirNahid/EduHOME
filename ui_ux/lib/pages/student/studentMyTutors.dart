@@ -19,8 +19,10 @@ class studentMyTutors extends StatefulWidget {
 class _studentMyTutorsState extends State<studentMyTutors> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<Teacher2> myTeachers = [];
+
   String picturePath = '';
   String fullName = '';
+  String studentId = '';
 
   Student? currentStudent = StudentUser.getCurrentStudentUser();
 
@@ -29,13 +31,15 @@ class _studentMyTutorsState extends State<studentMyTutors> {
     super.initState();
     picturePath = currentStudent!.picturePath;
     fullName = currentStudent!.fullName;
+    studentId = currentStudent!.id;
+
     fetchMyTeachersForStudent();
   }
 
   Future<void> fetchMyTeachersForStudent() async {
     try {
-      List<Teacher2> fetchedMyTeachers = await ApiService()
-          .fetchMyTeachersForStudent("64d9bd2ccfe6020e4cfc8ef3");
+      List<Teacher2> fetchedMyTeachers =
+          await ApiService().fetchMyTeachersForStudent('$studentId');
       setState(() {
         myTeachers = fetchedMyTeachers;
       });
@@ -55,7 +59,9 @@ class _studentMyTutorsState extends State<studentMyTutors> {
           padding: const EdgeInsets.only(top: 8.0, left: 10),
           child: CircleAvatar(
             backgroundImage: NetworkImage(
-                'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80'),
+              picturePath,
+              //  'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
+            ),
           ),
         ),
         title: Column(
@@ -122,8 +128,8 @@ class _studentMyTutorsState extends State<studentMyTutors> {
                         teacher.occupation, // Replace with actual occupation
                     subject: teacher.subject, // Replace with actual subject
                     location: teacher.location, // Replace with actual location
-                    profileImage:
-                        'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80', //teacher.picturePath,
+                    profileImage: teacher.picturePath,
+                    //    'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80', //teacher.picturePath,
                     onRatingPressed: () {
                       Navigator.push(
                         context,

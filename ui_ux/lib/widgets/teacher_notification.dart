@@ -50,6 +50,7 @@ class TeacherNotificationCard extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                   color: Colors.black,
                   fontSize: 18,
+                  //fontFamily: ,
                 ),
               ),
             ),

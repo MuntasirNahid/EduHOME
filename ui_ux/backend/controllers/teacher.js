@@ -6,7 +6,8 @@ const Offer = require("../models/Offer");
 
 const getAllAdvertisement = async (req, res) => {
   try {
-    const advertisements = await Advertisement.find();
+    const advertisements = await Advertisement.find().sort({ createdAt: - 1 });
+    // const advertisements = await Advertisement.find();
     res.status(200).json(advertisements);
   } catch (err) {
     res
@@ -100,19 +101,19 @@ const getTeacherNotifications = async (req, res) => {
 };
 
 const getTeacherProfileDetails = async (req, res) => {
-  const { id } = req.params;
+  const teacherId = req.params.id;
 
   try {
-    const profile = await Teacher.findById(id);
+    const profile = await Teacher.findById(teacherId);
 
     if (!profile) {
-      return res.status(404).json({ message: "Student profile not found." });
+      return res.status(404).json({ message: "Teacher profile not found." });
     }
     res.json(profile);
   } catch (err) {
     res
       .status(500)
-      .json({ message: "Failed to retrieve student's profile information." });
+      .json({ message: "Failed to retrieve Teacher's profile information." });
   }
 };
 

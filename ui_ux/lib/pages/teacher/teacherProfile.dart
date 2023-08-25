@@ -1,13 +1,16 @@
 //
+import 'package:get/get.dart';
 import 'package:ui_ux/constants/dropdown_list.dart';
 import 'package:ui_ux/constants/heading_textfield.dart';
 import 'package:ui_ux/constants/icon_constants.dart';
 import 'package:ui_ux/constants/input_decoration.dart';
 import 'package:ui_ux/constants/profile.dart';
+import 'package:ui_ux/pages/landing/landingPage.dart';
 import 'package:ui_ux/pages/teacher/services/teacher_services.dart';
 import 'package:ui_ux/widgets/teacher_subject_salary.dart';
 import 'package:ui_ux/widgets/update_drop_down_field.dart';
 import 'package:flutter/material.dart';
+import 'package:ui_ux/services/authenticate/authentication_repository.dart';
 
 class UpdateTeacherProfile extends StatefulWidget {
   UpdateTeacherProfile({super.key});
@@ -134,8 +137,9 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
-                      onPressed: () {
-                        //Carry Out Logout Action
+                      onPressed: () async {
+                        await AuthenticationRepository.instance.logout();
+                        Get.offAll(() => landingPage());
                       },
                       icon: Icon(IconData(0xe3b3, fontFamily: 'MaterialIcons')),
                       color: Colors.red,

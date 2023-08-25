@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:ui_ux/models/Teacher.dart';
 import 'package:ui_ux/pages/teacher/teacherNotification.dart';
 import 'package:ui_ux/pages/teacher/services/teacher_services.dart';
+import 'package:ui_ux/provider/teacher_provider.dart';
 import '../../models/offer.dart';
 import '../../widgets/tuitionOfferCard.dart';
 
@@ -14,18 +16,27 @@ class TuitionOffers extends StatefulWidget {
 
 class _TuitionOffersState extends State<TuitionOffers> {
   List<Offer> offers = [];
+  String picturePath = '';
+  String fullName = '';
+  String teacherId = '';
+
+  Teacher? currentTeacher = TeacherUser.getCurrentTeacherUser();
 
   @override
   void initState() {
     super.initState();
+
+    fullName = currentTeacher!.fullName;
+    picturePath = currentTeacher!.picturePath;
+    teacherId = currentTeacher!.id;
+
     fetchTuitionOffers();
   }
 
   Future<void> fetchTuitionOffers() async {
     try {
       List<Offer> fetchedOffers = await ApiService()
-          .fetchPendingOffersForTeacher(
-              "64d8e7d6b7f46ededc395c1e"); //giving teacherID
+          .fetchPendingOffersForTeacher('$teacherId'); //giving teacherID
       setState(() {
         offers = fetchedOffers;
       });
@@ -44,7 +55,9 @@ class _TuitionOffersState extends State<TuitionOffers> {
           padding: const EdgeInsets.only(top: 8.0, left: 10),
           child: CircleAvatar(
             backgroundImage: NetworkImage(
-                'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80'),
+              picturePath,
+              // 'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
+            ),
           ),
         ),
         title: Column(
@@ -55,8 +68,8 @@ class _TuitionOffersState extends State<TuitionOffers> {
               style: TextStyle(color: Colors.black),
             ),
             Text(
-              'Muntasir Mamun',
-              style: Theme.of(context).textTheme.bodyText1,
+              fullName,
+              style: TextStyle(fontSize: 18, color: Colors.black),
             ),
           ],
         ),
@@ -105,12 +118,13 @@ class _TuitionOffersState extends State<TuitionOffers> {
                 itemBuilder: (context, index) {
                   return TuitionOfferCard(
                     studentName: offers[index].studentName,
+                    picturePath: picturePath,
                     studentClass: offers[index].classNumber,
                     location: offers[index].location,
                     note: offers[index].note,
                     onAcceptPressed: () async {
-                      bool success = await ApiService()
-                          .acceptTuitionOffer(offers[index].studentId);
+                      bool success = await ApiService().acceptTuitionOffer(
+                          teacherId, offers[index].studentId);
                       if (success) {
                         AwesomeDialog(
                           context: context,
@@ -140,8 +154,8 @@ class _TuitionOffersState extends State<TuitionOffers> {
                         btnCancelOnPress: () {},
                         btnOkText: "Yes",
                         btnOkOnPress: () async {
-                          bool success = await ApiService()
-                              .rejectTuitionOffer(offers[index].studentId);
+                          bool success = await ApiService().rejectTuitionOffer(
+                              teacherId, offers[index].studentId);
 
                           if (success) {
                             setState(() {

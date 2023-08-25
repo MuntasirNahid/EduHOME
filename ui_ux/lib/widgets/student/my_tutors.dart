@@ -31,7 +31,7 @@ class MyTutorsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 155,
+      height: 160,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -42,7 +42,7 @@ class MyTutorsCard extends StatelessWidget {
           children: [
             Container(
               width: 70,
-              height: 145,
+              height: 152,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.black,
@@ -59,50 +59,53 @@ class MyTutorsCard extends StatelessWidget {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width - 115,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        teacherName,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          teacherName,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
 
-                      Spacer(), // Expands to take up remaining space
+                        Spacer(), // Expands to take up remaining space
 
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          height: 26,
-                          width: 50,
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    color: Color(0xFF38BBF8),
-                                  ),
-                                  Text(
-                                    starRating,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      fontSize: 15,
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            height: 26,
+                            width: 50,
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      color: Color(0xFF38BBF8),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(253, 219, 109, 1.0),
-                            borderRadius: BorderRadius.circular(10),
+                                    Text(
+                                      starRating,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(253, 219, 109, 1.0),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 Row(
@@ -133,7 +136,7 @@ class MyTutorsCard extends StatelessWidget {
                     ),
                     SizedBox(width: 5),
                     Text(
-                      'Experience: ${experience}',
+                      'Experience: ${experience} Years',
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                         color: Colors.black,

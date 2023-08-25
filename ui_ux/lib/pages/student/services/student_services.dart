@@ -1,13 +1,20 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:ui_ux/models/Student.dart';
 import 'package:ui_ux/models/advertisement.dart';
 import 'package:ui_ux/models/student2.dart';
 import 'package:ui_ux/models/teacher2.dart';
 import 'package:ui_ux/models/notification.dart';
+import 'package:ui_ux/provider/student_provider.dart';
 
 class ApiService {
   final String baseUrl = 'http://192.168.0.103:4002';
+
+  // String studentId = "";
+  // Student? currentStudent = StudentUser.getCurrentStudentUser();
+
+  //  studentId = currentStudent!.id;
 
   Future<List<Teacher2>> getALlTeachers(BuildContext context) async {
     try {
@@ -58,7 +65,7 @@ class ApiService {
   Future<List<Teacher2>> fetchMyTeachersForStudent(String studentId) async {
     try {
       final response = await http.get(
-        Uri.parse('$baseUrl/api/student/64d9bd2ccfe6020e4cfc8ef3/myTeachers'),
+        Uri.parse('$baseUrl/api/student/$studentId/myTeachers'),
 
         //for checking purpose
         //  Uri.parse('$baseUrl/api/teacher/$teacherId/myTeachers'),
@@ -124,11 +131,10 @@ class ApiService {
   }
 
   Future<Map<String, dynamic>> postTuitionAdvertisement(
-      Advertisement advertisement) async {
+      Advertisement advertisement, String studentId) async {
     try {
       final response = await http.post(
-        Uri.parse(
-            '$baseUrl/api/student/64d9bd2ccfe6020e4cfc8ef3/postAdvertisement'),
+        Uri.parse('$baseUrl/api/student/$studentId/postAdvertisement'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(advertisement.toJson()),
       );
@@ -147,8 +153,7 @@ class ApiService {
   Future<List<Advertisement>> fetchMyAdvertisements(String studentId) async {
     try {
       final response = await http.get(
-        Uri.parse(
-            '$baseUrl/api/student/64d9bd2ccfe6020e4cfc8ef3/advertisements'),
+        Uri.parse('$baseUrl/api/student/$studentId/advertisements'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -166,11 +171,12 @@ class ApiService {
     }
   }
 
-  Future<void> deleteAdvertisement(String advertisementId) async {
+  Future<void> deleteAdvertisement(
+      String studentId, String advertisementId) async {
     try {
       final response = await http.delete(
         Uri.parse(
-            '$baseUrl/api/student/64d9bd2ccfe6020e4cfc8ef3/advertisement/$advertisementId'),
+            '$baseUrl/api/student/$studentId/advertisement/$advertisementId'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -184,11 +190,12 @@ class ApiService {
     }
   }
 
-  Future<bool> acceptApplicant(String teacherId, String advertisementId) async {
+  Future<bool> acceptApplicant(
+      String studentId, String teacherId, String advertisementId) async {
     try {
       final response = await http.post(
         Uri.parse(
-            '$baseUrl/api/student/64d9bd2ccfe6020e4cfc8ef3/$advertisementId/applicants/$teacherId'),
+            '$baseUrl/api/student/$studentId/$advertisementId/applicants/$teacherId'),
         headers: {'Content-Type': 'application/json'},
       );
 

@@ -1,10 +1,14 @@
 import 'package:ui_ux/constants/tuition.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ui_ux/models/Student.dart';
 import 'package:ui_ux/models/advertisement.dart';
 import 'package:ui_ux/pages/student/services/student_services.dart';
 import 'package:ui_ux/pages/student/studentApplicantTeacherList.dart';
 import 'package:ui_ux/pages/student/studentEditTuitionPost.dart';
+import 'package:ui_ux/provider/student_provider.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import "package:get/get.dart";
 
 class StudentPosts extends StatefulWidget {
   const StudentPosts({super.key});
@@ -16,19 +20,27 @@ class StudentPosts extends StatefulWidget {
 class _StudentPostsState extends State<StudentPosts> {
   List<Advertisement> fetchedPosts = [];
 
+  String studentId = '';
+
+  Student? currentStudent = StudentUser.getCurrentStudentUser();
+
   @override
   void initState() {
     super.initState();
+    studentId = currentStudent!.id;
+// Add this print statement
+    print('StudentPosts initState called');
     fetchAdvertisements();
   }
 
   Future<void> fetchAdvertisements() async {
     try {
       final myAdvertisements =
-          await ApiService().fetchMyAdvertisements('64d9bd2ccfe6020e4cfc8ef3');
+          await ApiService().fetchMyAdvertisements('$studentId');
       setState(() {
         fetchedPosts = myAdvertisements;
       });
+      print('Fetched Advertisements: $fetchedPosts');
     } catch (error) {
       print('Error fetching advertisements: $error');
     }
@@ -36,7 +48,7 @@ class _StudentPostsState extends State<StudentPosts> {
 
   Future<void> _deleteAdvertisement(String advertisementId) async {
     try {
-      await ApiService().deleteAdvertisement(advertisementId);
+      await ApiService().deleteAdvertisement(studentId, advertisementId);
       setState(() {
         // Remove the deleted advertisement from the fetchedPosts list
         fetchedPosts.removeWhere((ad) => ad.id == advertisementId);
@@ -98,7 +110,7 @@ class _StudentPostsState extends State<StudentPosts> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                        height: 200,
+                        height: 208,
                         width: 333,
                         decoration: BoxDecoration(
                             color: item.booked
@@ -203,6 +215,9 @@ class _StudentPostsState extends State<StudentPosts> {
                                 ],
                               ),
                             ),
+                            SizedBox(
+                              height: 10,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -235,7 +250,20 @@ class _StudentPostsState extends State<StudentPosts> {
                                       IconButton(
                                           onPressed: () {
                                             // POST DELETE BUTTON
-                                            _deleteAdvertisement(item.id);
+                                            AwesomeDialog(
+                                              context: context,
+                                              dialogType: DialogType.warning,
+                                              animType: AnimType.topSlide,
+                                              showCloseIcon: true,
+                                              title: "Warning",
+                                              desc:
+                                                  "Are you sure you want to delete the Advertisement?",
+                                              btnCancelOnPress: () {},
+                                              btnOkText: "Yes",
+                                              btnOkOnPress: () {
+                                                _deleteAdvertisement(item.id);
+                                              },
+                                            ).show();
                                           },
                                           icon: FaIcon(
                                               FontAwesomeIcons.trashCan,
@@ -265,14 +293,23 @@ class _StudentPostsState extends State<StudentPosts> {
                                               onUpdateAdvertisements:
                                                   (updatedAdvertisements) {
                                                 setState(() {
-                                                  fetchedPosts =
-                                                      updatedAdvertisements;
+                                                  fetchedPosts = List<
+                                                          Advertisement>.from(
+                                                      updatedAdvertisements);
                                                 });
                                               },
                                               fetchedPosts: fetchedPosts,
                                             ),
                                           ),
                                         );
+
+                                        if (updatedPosts != null) {
+                                          setState(() {
+                                            fetchedPosts =
+                                                List<Advertisement>.from(
+                                                    updatedPosts);
+                                          });
+                                        }
                                       },
                                       style: ElevatedButton.styleFrom(
                                           backgroundColor: item.booked

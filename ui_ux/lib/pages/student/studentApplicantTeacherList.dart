@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:ui_ux/models/Student.dart';
 import 'package:ui_ux/models/advertisement.dart';
 import 'package:ui_ux/models/teacher2.dart';
 import 'package:ui_ux/pages/student/services/student_services.dart';
+import 'package:ui_ux/provider/student_provider.dart';
 import 'package:ui_ux/widgets/student/applicant_list.dart';
 
 class ApplicantList extends StatefulWidget {
@@ -25,21 +27,23 @@ class _ApplicantListState extends State<ApplicantList> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<Teacher2> applicants = [];
-
+  String studentId = "";
+  Student? currentStudent = StudentUser.getCurrentStudentUser();
   @override
   void initState() {
     super.initState();
+    studentId = currentStudent!.id;
     fetchApplicants();
   }
 
   Future<void> fetchApplicants() async {
     try {
-      print("We are here");
-      print('Advertisement ID: ${widget.advertisement.id}');
+      // print("We are here");
+      // print('Advertisement ID: ${widget.advertisement.id}');
       List<Teacher2> fetchedApplicants =
           await ApiService().getAllApplicants(widget.advertisement.id);
 
-      print('Fetched Applicants: $fetchedApplicants');
+      //    print('Fetched Applicants: $fetchedApplicants');
 
       setState(() {
         applicants = fetchedApplicants;
@@ -52,7 +56,7 @@ class _ApplicantListState extends State<ApplicantList> {
   Future<void> _acceptApplicant(String teacherId) async {
     try {
       bool success = await ApiService()
-          .acceptApplicant(teacherId, widget.advertisement.id);
+          .acceptApplicant(studentId, teacherId, widget.advertisement.id);
       if (success) {
         setState(() {
           widget.advertisement.booked = true;
@@ -74,7 +78,7 @@ class _ApplicantListState extends State<ApplicantList> {
           title: 'Success',
           desc: 'Tuition Request Accepted Successfully.',
           btnOkOnPress: () {
-            Navigator.pop(context);
+            Navigator.pop(context,updatedPosts);
           },
         ).show();
       }
@@ -153,8 +157,8 @@ class _ApplicantListState extends State<ApplicantList> {
                         subject:
                             teacher.subject.isNotEmpty ? teacher.subject : "",
                         location: teacher.location,
-                        profileImage:
-                            'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80', //teacher.picturePath,
+                        profileImage: teacher.picturePath,
+                        //   'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80', //teacher.picturePath,
                         onAcceptPressed: () {
                           _acceptApplicant(teacher.id);
                         },

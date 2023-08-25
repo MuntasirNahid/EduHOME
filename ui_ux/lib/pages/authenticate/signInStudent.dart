@@ -142,7 +142,7 @@ class _SignInStudentState extends State<SignInStudent> {
                       child: const Text(
                         "Forgot Password?",
                         style: TextStyle(
-                            fontFamily: "Poppins",
+                            //    fontFamily: "Poppins",
                             fontWeight: FontWeight.w500,
                             fontSize: 18,
                             color: Colors.black,
@@ -180,7 +180,7 @@ class _SignInStudentState extends State<SignInStudent> {
                   child: Text(
                     "Sign In",
                     style: TextStyle(
-                      fontFamily: "Poppins",
+                      // fontFamily: "Poppins",
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
                     ),

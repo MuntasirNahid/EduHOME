@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ui_ux/models/Student.dart';
 import 'package:ui_ux/models/notification.dart';
 import 'package:ui_ux/pages/student/services/student_services.dart';
 import 'package:ui_ux/widgets/student/notification_card.dart';
+
+import '../../provider/student_provider.dart';
 
 class studentNotification extends StatefulWidget {
   const studentNotification({super.key});
@@ -12,18 +15,19 @@ class studentNotification extends StatefulWidget {
 
 class _studentNotificationState extends State<studentNotification> {
   List<NotificationModel> notifications = [];
-
+  String studentId = "";
+  Student? currentStudent = StudentUser.getCurrentStudentUser();
   @override
   void initState() {
     super.initState();
-    // Fetch notifications from the API
+    studentId = currentStudent!.id;
     fetchNotifications();
   }
 
   Future<void> fetchNotifications() async {
     try {
-      final fetchedNotifications = await ApiService()
-          .fetchStudentNotifications('64d9bd2ccfe6020e4cfc8ef3');
+      final fetchedNotifications =
+          await ApiService().fetchStudentNotifications('$studentId');
       setState(() {
         notifications = fetchedNotifications;
       });

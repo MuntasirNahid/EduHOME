@@ -9,7 +9,7 @@ import 'package:ui_ux/models/teacher2.dart';
 import '../../../models/offer.dart';
 
 class ApiService {
-  final String baseUrl = 'http://192.168.0.103:4002';
+  final String baseUrl = 'http://192.168.0.102:4002';
 
   Future<List<Advertisement>> fetchTuitionList(BuildContext context) async {
     try {
@@ -40,7 +40,7 @@ class ApiService {
         //  Uri.parse('$baseUrl/api/teacher/$teacherId/pendingOffer'),
 
         //for checking purpose
-        Uri.parse('$baseUrl/api/teacher/64d8e7d6b7f46ededc395c1e/pendingOffer'),
+        Uri.parse('$baseUrl/api/teacher/$teacherId/pendingOffer'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -61,7 +61,7 @@ class ApiService {
   Future<List<Student2>> fetchMyStudentsForTeacher(String teacherId) async {
     try {
       final response = await http.get(
-        Uri.parse('$baseUrl/api/teacher/64d8e7d6b7f46ededc395c1e/myStudents'),
+        Uri.parse('$baseUrl/api/teacher/$teacherId/myStudents'),
 
         //for checking purpose
         //  Uri.parse('$baseUrl/api/teacher/$teacherId/myStudents'),
@@ -82,22 +82,17 @@ class ApiService {
     }
   }
 
-  //Sani will decide if it's needed or not
-  Future<List<Teacher2>> fetchTeacherDetails(String teacherId) async {
+  Future<Teacher2> fetchTeacherDetails(String teacherId) async {
     try {
       final response = await http.get(
-        Uri.parse('$baseUrl/api/teacher/64d8e7d6b7f46ededc395c1e/profile'),
-
-        //for checking purpose
-        //  Uri.parse('$baseUrl/api/teacher/$teacherId/myStudents'),
+        Uri.parse('$baseUrl/api/teacher/$teacherId/profile'),
         headers: {'Content-Type': 'application/json'},
       );
 
       if (response.statusCode == 200) {
-        List<dynamic> jsonData = jsonDecode(response.body);
-        List<Teacher2> myDetails =
-            jsonData.map((json) => Teacher2.fromJson(json)).toList();
-        return myDetails;
+        dynamic jsonData = jsonDecode(response.body);
+        Teacher2 teacherDetails = Teacher2.fromJson(jsonData);
+        return teacherDetails;
       } else {
         throw Exception(
             'Failed to fetch teacher details: ${response.statusCode}');
@@ -156,12 +151,12 @@ class ApiService {
     }
   }
 
-  Future<bool> acceptTuitionOffer(String studentId) async {
+  Future<bool> acceptTuitionOffer(String teacherId, String studentId) async {
     try {
       final response = await http.post(
         Uri.parse(
             //  '$baseUrl/api/teacher/64d8e7d6b7f46ededc395c1e/pendingOffer/$studentId'),
-            '$baseUrl/api/teacher/64d8e7d6b7f46ededc395c1e/pendingOfferAc/64d9bd2ccfe6020e4cfc8ef3'),
+            '$baseUrl/api/teacher/$teacherId/pendingOfferAc/$studentId'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -178,12 +173,12 @@ class ApiService {
     }
   }
 
-  Future<bool> rejectTuitionOffer(String studentId) async {
+  Future<bool> rejectTuitionOffer(String teacherId, String studentId) async {
     try {
       final response = await http.post(
         Uri.parse(
             //  '$baseUrl/api/teacher/$teacherId/pendingOffer/$studentId'),
-            '$baseUrl/api/teacher/64d8e7d6b7f46ededc395c1e/pendingOfferRe/64d9bd2ccfe6020e4cfc8ef3'),
+            '$baseUrl/api/teacher/$teacherId/pendingOfferRe/$studentId'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -200,9 +195,10 @@ class ApiService {
     }
   }
 
-  Future<bool> applyForTuitionAdvertisement(String advertisementId) async {
-    final String teacherId =
-        "64d8e7d6b7f46ededc395c1f"; // Replace with the actual teacher ID
+  Future<bool> applyForTuitionAdvertisement(
+      String teacheId, String advertisementId) async {
+    final String teacherId = teacheId;
+
     final Map<String, dynamic> data = {'teacherId': teacherId};
 
     try {

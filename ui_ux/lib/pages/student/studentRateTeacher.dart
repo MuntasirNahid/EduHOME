@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:ui_ux/models/Student.dart';
 import 'dart:convert';
+
+import 'package:ui_ux/models/teacher2.dart';
+import 'package:ui_ux/pages/teacher/services/teacher_services.dart';
+import 'package:ui_ux/provider/student_provider.dart';
 
 class RateTeacher extends StatefulWidget {
   final String teacherId;
@@ -17,6 +23,36 @@ class RateTeacher extends StatefulWidget {
 
 class _RateTeacherState extends State<RateTeacher> {
   int _selectedRating = 3;
+
+  Teacher2? teacherDetails;
+  String studentId = "";
+
+  Student? currentStudent = StudentUser.getCurrentStudentUser();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    studentId = currentStudent!.id;
+    fetchTeacherDetails();
+  }
+
+  Future<void> fetchTeacherDetails() async {
+    try {
+      Teacher2 fetchedDetails = await ApiService().fetchTeacherDetails(widget
+          .teacherId); // Notice that we expect a single Teacher2 object, not a list
+      if (fetchedDetails != null) {
+        // Check if details are not null
+        setState(() {
+          teacherDetails = fetchedDetails;
+          print('$teacherDetails');
+        });
+      }
+    } catch (e) {
+      print('Error fetching teacher details: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +86,9 @@ class _RateTeacherState extends State<RateTeacher> {
               children: [
                 CircleAvatar(
                   backgroundImage: NetworkImage(
-                    'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
+                    teacherDetails?.picturePath ?? "",
+
+                    // 'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
                   ),
                   radius: 50,
                 ),
@@ -61,7 +99,7 @@ class _RateTeacherState extends State<RateTeacher> {
                       0, // Adjust this value to position the container horizontally
                   child: Container(
                     height: 26,
-                    width: 45,
+                    width: 50,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -73,7 +111,12 @@ class _RateTeacherState extends State<RateTeacher> {
                               color: Color(0xFF38BBF8),
                             ),
                             Text(
-                              '4',
+                              //    "4",
+                              teacherDetails != null
+                                  ? teacherDetails!
+                                      .calculateMeanRating()
+                                      .toStringAsFixed(1)
+                                  : "3",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
@@ -97,7 +140,9 @@ class _RateTeacherState extends State<RateTeacher> {
             height: 10,
           ),
           Text(
-            'Mostahid Hasan',
+            teacherDetails?.fullName ?? "Unknown",
+            // "nahid",
+            //  teacherDetails!.fullName,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,

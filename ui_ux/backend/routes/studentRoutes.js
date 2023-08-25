@@ -8,7 +8,7 @@ const {
   getStudentSchedule,
   getStudentNotifications,
   getStudentProfile,
-  getIndividualTeacher,
+  //getIndividualTeacher,
   getApplicantsList,
   getStudentsIndividualTeacherDetails,
   getMyAdvertisements,
@@ -37,7 +37,7 @@ router.get("/:id/notifications", getStudentNotifications); // notifications
 
 router.get("/:id/profile", getStudentProfile); // details of profile
 
-router.get("/:id/moreTeacher/:teacherId", getIndividualTeacher); // get individual teacher from all teacher.
+//router.get("/:id/moreTeacher/:teacherId", getIndividualTeacher); // get individual teacher from all teacher.
 
 router.get("/:advertisementId/applicants", getApplicantsList); // wil come from advertisement.js
 

@@ -82,22 +82,6 @@ const getStudentProfile = async (req, res) => {
   }
 };
 
-const getIndividualTeacher = async (req, res) => {
-  const { id, teacherId } = req.params;
-
-  try {
-    const teachers = await Teacher.findById({ _id: teacherId });
-
-    const { password, studentId, ...teacherDetails } = teachers._doc;
-
-    res.status(200).json(teacherDetails);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ msg: "failed to retrieve data of individual teacher" });
-  }
-};
-
 const getApplicantsList = async (req, res) => {
   const advertisementId = req.params.advertisementId;
 
@@ -275,7 +259,9 @@ const acceptApplicant = async (req, res) => {
     await student.save();
 
     advertisement.booked = true;
+
     await advertisement.save();
+    
     const updatedAdvertisement = await Advertisement.findById(advertisementId);
 
     const newNotification = new Notification({
@@ -418,7 +404,6 @@ module.exports = {
   getStudentSchedule,
   getStudentNotifications,
   getStudentProfile,
-  getIndividualTeacher,
   getApplicantsList,
   getStudentsIndividualTeacherDetails,
   studentLogout,

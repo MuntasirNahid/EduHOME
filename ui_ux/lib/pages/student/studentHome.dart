@@ -23,7 +23,11 @@ class _studentHomeState extends State<studentHome> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ApiService _apiService = ApiService();
 
+  final TextEditingController textController = TextEditingController();
+
   List<Teacher2> teachers = [];
+  List<Teacher2> filteredTeachers = [];
+  bool isSearching = false;
 
   String picturePath = '';
   String fullName = '';
@@ -34,8 +38,15 @@ class _studentHomeState extends State<studentHome> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    picturePath = currentStudent!.picturePath;
-    fullName = currentStudent!.fullName;
+    //  picturePath = currentStudent!.picturePath;
+    picturePath = currentStudent?.picturePath ??
+        ''; // Use an empty string as default if picturePath is null
+    fullName = currentStudent?.fullName ??
+        ''; // Use an empty string as default if fullName is null
+
+    //  fullName = currentStudent!.fullName;
+
+    textController.addListener(_onSearchTextChanged);
     fetchTeachers();
   }
 
@@ -51,6 +62,23 @@ class _studentHomeState extends State<studentHome> {
     }
   }
 
+  void _onSearchTextChanged() {
+    String searchText = textController.text.toLowerCase();
+    setState(() {
+      if (searchText.isNotEmpty) {
+        isSearching = true;
+        filteredTeachers = teachers
+            .where((teacher) =>
+                teacher.fullName.toLowerCase().contains(searchText) ||
+                teacher.teachingSubject.any(
+                    (subject) => subject.toLowerCase().contains(searchText)))
+            .toList();
+      } else {
+        isSearching = false;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,8 +89,8 @@ class _studentHomeState extends State<studentHome> {
         leading: Padding(
           padding: const EdgeInsets.only(top: 8.0, left: 10),
           child: CircleAvatar(
-            backgroundImage: NetworkImage(
-                'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80'),
+            backgroundImage: NetworkImage(picturePath),
+            //   'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80'),
           ),
         ),
         title: Column(
@@ -127,6 +155,7 @@ class _studentHomeState extends State<studentHome> {
                       ],
                     ),
                     child: TextFormField(
+                      controller: textController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Search Teacher Name',
@@ -162,7 +191,8 @@ class _studentHomeState extends State<studentHome> {
               SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(
-                  children: teachers.map((teacher) {
+                  children: (isSearching ? filteredTeachers : teachers)
+                      .map((teacher) {
                     return TeacherListCard(
                       teacher: teacher,
                       teacherName: teacher.fullName,
@@ -175,8 +205,8 @@ class _studentHomeState extends State<studentHome> {
                       subject:
                           teacher.subject.isNotEmpty ? teacher.subject : "",
                       location: teacher.location,
-                      profileImage:
-                          'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80', //teacher.picturePath,
+                      profileImage: teacher.picturePath,
+                      //'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80', //teacher.picturePath,
                       onOfferPressed: () {
                         Navigator.push(
                           context,

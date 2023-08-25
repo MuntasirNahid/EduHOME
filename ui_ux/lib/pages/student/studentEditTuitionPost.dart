@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ui_ux/pages/student/services/student_services.dart';
+import 'package:ui_ux/widgets/CustomDropDownButtonForTuitionEdit.dart';
 import '../../constants/dropdown_list.dart';
 import '../../constants/input_decoration.dart';
 import '../../models/advertisement.dart';
@@ -100,6 +101,17 @@ class _EditTuitionPostState extends State<EditTuitionPost> {
         widget.advertisement.id, // Provide the advertisement ID
         updateData,
       );
+      void initState() {
+        selectedTuitionType = widget.advertisement.tuitionType;
+        selectedClass = widget.advertisement.classNumber.toString();
+        selectedGender = widget.advertisement.teacherGender;
+        selectedDays = widget.advertisement.daysInWeek.toString();
+        selectedSalary = widget.advertisement.salary.toString();
+        subjectEditingController.text = widget.advertisement.subjects;
+        locationEditingController.text = widget.advertisement.location;
+      }
+
+      ;
 
       setState(() {
         // Update the existing advertisement in the list with the updated one
@@ -243,8 +255,9 @@ class _EditTuitionPostState extends State<EditTuitionPost> {
                             textAlign: TextAlign.left,
                           ),
                         ),
-                        CustomDropDownButtonForPostTuition(
+                        CustomDropDownButtonForPostTuition1(
                           //value:widget.userDetails.occupation,
+                          value: widget.advertisement.tuitionType,
                           items: tuitionType.map((valueItem) {
                             return DropdownMenuItem(
                               value: valueItem,
@@ -271,8 +284,9 @@ class _EditTuitionPostState extends State<EditTuitionPost> {
                             textAlign: TextAlign.left,
                           ),
                         ),
-                        CustomDropDownButtonForPostTuition(
+                        CustomDropDownButtonForPostTuition1(
                           //value:widget.userDetails.occupation,
+                          value: widget.advertisement.classNumber.toString(),
                           items: classOfTuition.map((valueItem) {
                             return DropdownMenuItem(
                               value: valueItem,
@@ -311,8 +325,8 @@ class _EditTuitionPostState extends State<EditTuitionPost> {
                             textAlign: TextAlign.left,
                           ),
                         ),
-                        CustomDropDownButtonForPostTuition(
-                          //value:widget.userDetails.occupation,
+                        CustomDropDownButtonForPostTuition1(
+                          value: widget.advertisement.teacherGender,
                           items: preferredGender.map((valueItem) {
                             return DropdownMenuItem(
                               value: valueItem,
@@ -339,8 +353,9 @@ class _EditTuitionPostState extends State<EditTuitionPost> {
                             textAlign: TextAlign.left,
                           ),
                         ),
-                        CustomDropDownButtonForPostTuition(
+                        CustomDropDownButtonForPostTuition1(
                           //value:widget.userDetails.occupation,
+                          value: widget.advertisement.daysInWeek.toString(),
                           items: daysInWeek.map((valueItem) {
                             return DropdownMenuItem(
                               value: valueItem,
