@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:eduhome_project/pages/student/studentApplicantTeacherList.dart';
 import 'package:eduhome_project/pages/student/studentEditTuitionPost.dart';
 
-
 class StudentPosts extends StatefulWidget {
   const StudentPosts({super.key});
 
