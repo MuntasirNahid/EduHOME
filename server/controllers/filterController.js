@@ -33,7 +33,10 @@ const fetchTutors = async (req, res) => {
       }
       else {
         query.$expr = {
-          $lte: [{ $toInt: "$experience" }, experienceValue]
+          $and: [
+            { $gte: [{ $toInt: "$experience" }, experienceValue] },
+            { $lte: [{ $toInt: "$experience" }, experienceValue] }
+          ]
         }
       }
     };
