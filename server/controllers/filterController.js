@@ -26,7 +26,7 @@ const fetchTutors = async (req, res) => {
     if (experience) {
       experienceValue = parseInt(experience, 10);
 
-      if (experience == "5") {
+      if (experienceValue == 5) {
         query.$expr = {
           $gte: [{ $toInt: "$experience" }, experienceValue]
         }
