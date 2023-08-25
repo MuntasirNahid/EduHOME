@@ -1,6 +1,6 @@
 class Student2 {
   final String fullName;
-  final int classStudies;
+  final String classStudies;
   final String location;
   final String phoneNumber;
   // final String password;

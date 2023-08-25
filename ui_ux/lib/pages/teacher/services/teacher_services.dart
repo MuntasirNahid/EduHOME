@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:ui_ux/constants/ip.dart';
 import 'package:ui_ux/models/advertisement.dart';
 import 'package:ui_ux/models/notification.dart';
 import 'package:ui_ux/models/student2.dart';
@@ -9,7 +10,7 @@ import 'package:ui_ux/models/teacher2.dart';
 import '../../../models/offer.dart';
 
 class ApiService {
-  final String baseUrl = 'http://192.168.0.102:4002';
+  final String baseUrl = '${ip}';
 
   Future<List<Advertisement>> fetchTuitionList(BuildContext context) async {
     try {

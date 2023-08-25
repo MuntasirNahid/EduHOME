@@ -426,6 +426,7 @@
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:ui_ux/constants/filter_object.dart';
+import 'package:ui_ux/constants/ip.dart';
 import 'package:ui_ux/constants/tuition_post.dart';
 import 'package:ui_ux/models/Teacher.dart';
 import 'package:ui_ux/pages/teacher/services/teacher_services.dart';
@@ -555,8 +556,8 @@ class _TeacherHomeState extends State<TeacherHome> {
       ),
       endDrawer: MyDrawer(
         onDataSelected: (FilterObject selectedData) async {
-          final url =
-              Uri.parse('http://192.168.0.103:4002/filter/getAdvertisements');
+          print("Selected Data : " + selectedData.toString());
+          final url = Uri.parse('${ip}/filter/getAdvertisements');
           final headers = <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           };
@@ -571,7 +572,7 @@ class _TeacherHomeState extends State<TeacherHome> {
 
             if (response.statusCode == 200) {
               var responseData = jsonDecode(response.body);
-              // print(responseData.toString());
+              print(responseData.toString());
               List<Advertisement> fetchedFilteredTuitionList =
                   List<Advertisement>.from(
                       responseData.map((data) => Advertisement.fromJson(data)));

@@ -40,51 +40,54 @@ class _studentNotificationState extends State<studentNotification> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SafeArea(
-                child: TextButton(
-                  child: Text(
-                    '< Notifications',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: Row(
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: notifications.length,
-                    itemBuilder: (context, index) {
-                      return StudentNotificationCard(
-                        iconType: notifications[index].messageType,
-                        message: notifications[index].message,
-                      );
+                SafeArea(
+                  child: TextButton(
+                    child: Text(
+                      '< Notifications',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
                     },
                   ),
                 ),
               ],
             ),
-          ),
-        ],
+            SizedBox(
+              height: 15,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: notifications.length,
+                      itemBuilder: (context, index) {
+                        return StudentNotificationCard(
+                          iconType: notifications[index].messageType,
+                          message: notifications[index].message,
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

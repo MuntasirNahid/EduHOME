@@ -29,7 +29,7 @@ class _studentMyTutorsState extends State<studentMyTutors> {
   @override
   void initState() {
     super.initState();
-    picturePath = currentStudent!.picturePath;
+    picturePath = currentStudent!.picturePath.toString();
     fullName = currentStudent!.fullName;
     studentId = currentStudent!.id;
 

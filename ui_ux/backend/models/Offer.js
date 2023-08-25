@@ -16,7 +16,7 @@ const offerSchema = new Schema({
     required: true,
   },
   classStudies: {
-    type: Number,
+    type: String,
     required: true,
   },
   location: {

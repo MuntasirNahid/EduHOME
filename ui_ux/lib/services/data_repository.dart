@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 
 class DataRespository {
   static Future<void> saveTeacherData(Teacher teacherData) async {
-    final url = Uri.parse('http://${ip}:4002/users/saveTeacherData');
+    final url = Uri.parse('${ip}/users/saveTeacherData');
     final headers = <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     };
@@ -53,7 +53,7 @@ class DataRespository {
   }
 
   static Future<void> getTeacherData(String email) async {
-    final url = Uri.parse('http://${ip}:4002/users/getTeacherData');
+    final url = Uri.parse('${ip}/users/getTeacherData');
     final headers = <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     };
@@ -97,7 +97,7 @@ class DataRespository {
   }
 
   static Future<void> saveStudentData(Student studentData) async {
-    final url = Uri.parse('http://${ip}:4002/users/saveStudentData');
+    final url = Uri.parse('${ip}/users/saveStudentData');
     final headers = <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     };
@@ -116,7 +116,7 @@ class DataRespository {
       StudentUser.currentStudent = new Student(
           id: responseData['_id'],
           fullName: responseData['fullName'],
-          classStudies: responseData['classStudies'].toString(),
+          classStudies: responseData['classStudies'],
           location: responseData['location'],
           email: responseData['email'],
           phoneNumber: responseData['phoneNumber'],
@@ -133,7 +133,7 @@ class DataRespository {
   }
 
   static Future<void> getStudentData(String email) async {
-    final url = Uri.parse('http://${ip}:4002/users/getStudentData');
+    final url = Uri.parse('${ip}/users/getStudentData');
     final headers = <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     };
@@ -156,7 +156,7 @@ class DataRespository {
         StudentUser.currentStudent = new Student(
             id: responseData[0]['_id'],
             fullName: responseData[0]['fullName'],
-            classStudies: responseData[0]['classStudies'].toString(),
+            classStudies: responseData[0]['classStudies'],
             location: responseData[0]['location'],
             email: responseData[0]['email'],
             phoneNumber: responseData[0]['phoneNumber'],
@@ -172,7 +172,7 @@ class DataRespository {
   }
 
   static Future<void> updateStudentData(Student studentData) async {
-    final url = Uri.parse('http://${ip}:4002/users/updateStudentProfile');
+    final url = Uri.parse('${ip}/users/updateStudentProfile');
     final headers = <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     };
@@ -197,6 +197,43 @@ class DataRespository {
             institution: responseData['institution'],
             classStudies: responseData['classStudies']);
         print(StudentUser.currentStudent?.id.toString());
+      }
+    } catch (e) {
+      throw CustomException("Something went wrong in server");
+    }
+  }
+
+  static Future<void> updateTeacherData(Teacher teacherData) async {
+    final url = Uri.parse('${ip}/users/updateTeacherProfile');
+    final headers = <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+    final data = teacherData.toJson();
+
+    try {
+      var response = await http.post(
+        url,
+        headers: headers,
+        body: data,
+      );
+
+      if (response.statusCode == 200) {
+        var responseData = await jsonDecode(response.body);
+        TeacherUser.currentTeacher = new Teacher(
+            id: responseData['_id'],
+            fullName: responseData['fullName'],
+            gender: responseData['gender'],
+            experience: responseData['experience'],
+            location: responseData['location'],
+            email: responseData['email'],
+            phoneNumber: responseData['phoneNumber'],
+            occupation: responseData['occupation'],
+            institution: responseData['institution'],
+            subject: responseData['subject'],
+            picturePath: responseData['picturePath'],
+            teachingSubject: responseData['teachingSubject'].join(","),
+            minSalary: responseData['minSalary'],
+            maxSalary: responseData['maxSalary']);
       }
     } catch (e) {
       throw CustomException("Something went wrong in server");

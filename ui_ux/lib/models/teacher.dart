@@ -11,7 +11,7 @@ class Teacher {
   final String occupation;
   final String institution;
   final String subject;
-  final String picturePath;
+  String? picturePath;
   final String teachingSubject;
   final String minSalary;
 
@@ -30,7 +30,7 @@ class Teacher {
       required this.occupation,
       required this.institution,
       required this.subject,
-      required this.picturePath,
+      this.picturePath,
       required this.teachingSubject,
       required this.minSalary,
       required this.maxSalary,

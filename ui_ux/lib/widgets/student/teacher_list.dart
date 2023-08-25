@@ -164,7 +164,7 @@ class TeacherListCard extends StatelessWidget {
                   ),
                   SizedBox(width: 5),
                   Text(
-                    occupation == 'student'
+                    occupation == 'Student'
                         ? 'Studies ${subject} at ${education}'
                         : 'Works at ${education}',
                     style: TextStyle(

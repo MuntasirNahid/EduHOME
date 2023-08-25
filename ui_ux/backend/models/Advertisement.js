@@ -7,7 +7,7 @@ const advertisementSchema = new Schema({
     required: true,
   },
   class: {
-    type: Number,
+    type: String,
     required: true,
   },
   teacherGender: {

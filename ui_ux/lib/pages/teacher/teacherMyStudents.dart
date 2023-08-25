@@ -29,7 +29,7 @@ class _teacherMyStudentsState extends State<teacherMyStudents> {
   void initState() {
     super.initState();
     fullName = currentTeacher!.fullName;
-    picturePath = currentTeacher!.picturePath;
+    picturePath = currentTeacher!.picturePath.toString();
     teacherId = currentTeacher!.id;
     fetchMyStudentsForTeacher();
   }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloudinary/cloudinary.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
@@ -7,16 +8,26 @@ import 'package:image_picker/image_picker.dart';
 
 class StorageRepo extends GetxController {
   static StorageRepo get instance => Get.find();
-  final storage =
-      FirebaseStorage.instanceFor(bucket: "gs://eduhome-ec721.appspot.com/");
+  final cloudinary = Cloudinary.signedConfig(
+    apiKey: "519318338932629",
+    apiSecret: '7LK4y_FtsjflFUeT6l1IGgaU35k',
+    cloudName: "dmlf8agon",
+  );
 
   Future<String> uploadFile(XFile file, String filename) async {
-    var storageRef = storage.ref().child("images/${filename}");
-    File pic = File(file.path);
-    var uploadTask = storageRef.putFile(pic);
+    File pictureFile = File(file.path);
 
-    await uploadTask.whenComplete(() => null);
-    String url = await storageRef.getDownloadURL();
-    return url;
+    final response = await cloudinary.upload(
+      file: pictureFile.path,
+      fileBytes: pictureFile.readAsBytesSync(),
+      resourceType: CloudinaryResourceType.image,
+      folder: "images",
+      fileName: filename,
+    );
+
+    if (response.isSuccessful) {
+      print('Get your image from with ${response.secureUrl}');
+    }
+    return response.secureUrl.toString();
   }
 }

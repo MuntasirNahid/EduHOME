@@ -27,7 +27,7 @@ class StudentSignInController extends GetxController {
                   .toString()
                   .toLowerCase() ==
               'student') {
-        DataRespository.getStudentData(email);
+        await DataRespository.getStudentData(email);
       }
 
       AuthenticationRepository.instance.setInitialScreen(user);

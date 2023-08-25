@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:http/http.dart' as http;
+import 'package:ui_ux/constants/ip.dart';
 import 'package:ui_ux/models/Student.dart';
 import 'package:ui_ux/models/teacher2.dart';
 import 'package:ui_ux/pages/teacher/services/teacher_services.dart';
@@ -69,8 +70,7 @@ class _OfferTeacherState extends State<OfferTeacher> {
 
     try {
       final response = await http.post(
-        Uri.parse(
-            'http://192.168.0.103:4002/api/student/$studentId/offer/${widget.teacherId}'),
+        Uri.parse('${ip}/api/student/$studentId/offer/${widget.teacherId}'),
         headers: {"Content-Type": "application/json"},
         body: json.encode({"note": noteController.text}),
       );
@@ -102,7 +102,7 @@ class _OfferTeacherState extends State<OfferTeacher> {
     try {
       final response = await http.delete(
         Uri.parse(
-            'http://192.168.0.103:4002/api/student/$studentId/offercancel/${widget.teacherId}'),
+            '${ip}/api/student/$studentId/offercancel/${widget.teacherId}'),
         headers: {"Content-Type": "application/json"},
       );
 

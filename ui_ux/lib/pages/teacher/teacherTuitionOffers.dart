@@ -27,7 +27,7 @@ class _TuitionOffersState extends State<TuitionOffers> {
     super.initState();
 
     fullName = currentTeacher!.fullName;
-    picturePath = currentTeacher!.picturePath;
+    picturePath = currentTeacher!.picturePath.toString();
     teacherId = currentTeacher!.id;
 
     fetchTuitionOffers();

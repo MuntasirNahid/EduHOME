@@ -13,7 +13,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:ui_ux/pages/authenticate/signInStudent.dart';
 import 'package:ui_ux/pages/landing/studentLanding.dart';
 import 'package:quickalert/quickalert.dart';
-
+import 'package:ui_ux/constants/images.dart';
 import '../../widgets/back_button.dart';
 import 'package:get/get.dart';
 
@@ -305,7 +305,7 @@ class _StudentRegisterState extends State<StudentRegister> {
                             location: controller.location.text.trim(),
                             email: controller.email.text.trim(),
                             phoneNumber: controller.phoneNumber.text.trim(),
-                            picturePath: "Default",
+                            picturePath: studentImage,
                             institution: controller.institution.text.trim(),
                             classStudies: controller.classStudies.text.trim());
 

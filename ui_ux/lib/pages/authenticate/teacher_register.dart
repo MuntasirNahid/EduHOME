@@ -8,7 +8,7 @@ import 'package:ui_ux/widgets/custom_dropdown.dart';
 import 'package:ui_ux/widgets/teacher_subject_salary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-
+import 'package:ui_ux/constants/images.dart';
 import '../../constants/heading_textfield.dart';
 import '../../constants/icon_constants.dart';
 import '../../constants/input_decoration.dart';
@@ -581,7 +581,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                               occupation: controller.occupation.text.trim(),
                               institution: controller.instituition.text.trim(),
                               subject: controller.subject.text.trim(),
-                              picturePath: "Default Picture",
+                              picturePath: teacherImage,
                               teachingSubject: controller.teaches.text.trim(),
                               minSalary: controller.minSalary.text.trim(),
                               maxSalary: controller.maxSalary.text.trim());

@@ -2,7 +2,7 @@ class Offer {
   final String studentName;
   final String studentId;
   final String teacherId;
-  final int classNumber;
+  final String classNumber;
   final String location;
   final String note;
 

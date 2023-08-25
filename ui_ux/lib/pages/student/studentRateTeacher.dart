@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:ui_ux/constants/ip.dart';
 import 'package:ui_ux/models/Student.dart';
 import 'dart:convert';
 
@@ -207,7 +208,7 @@ class _RateTeacherState extends State<RateTeacher> {
               try {
                 final response = await http.post(
                   Uri.parse(
-                      'http://192.168.0.103:4002/api/student/rateTeacher/${widget.teacherId}'),
+                      '${ip}/api/student/rateTeacher/${widget.teacherId}'),
                   headers: {"Content-Type": "application/json"},
                   body: json.encode({"rating": _selectedRating}),
                 );

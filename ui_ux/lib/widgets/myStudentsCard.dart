@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyStudentCard extends StatelessWidget {
   final String studentName;
-  final int classNumber;
+  final String classNumber;
   final String phoneNumber;
   final String location;
   //final String image;

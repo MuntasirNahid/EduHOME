@@ -1,7 +1,7 @@
 class Advertisement {
   String id;
   String tuitionType;
-  int classNumber;
+  String classNumber;
   String teacherGender;
   int daysInWeek;
   int salary;

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TuitionOfferCard extends StatelessWidget {
   final String studentName;
   final String picturePath;
-  final int studentClass;
+  final String studentClass;
   final String location;
   final String note;
   final VoidCallback onAcceptPressed;

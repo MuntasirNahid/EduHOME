@@ -12,7 +12,7 @@ const studentSchema = new Schema({
   },
 
   classStudies: {
-    type: Number, //will be string
+    type: String, //will be string
     required: true,
   },
   location: {
