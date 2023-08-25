@@ -200,7 +200,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                               },
                               child: Icon(
                                 FontAwesomeIcons.camera,
-                                color: Colors.lightGreen,
+                                color: Color(0xFF00BFA5),
                               ),
                             ),
                           ),

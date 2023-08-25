@@ -131,7 +131,7 @@ class _UpdateStudentProfileState extends State<UpdateStudentProfile> {
                               },
                               child: Icon(
                                 FontAwesomeIcons.camera,
-                                color: Colors.lightGreen,
+                                color: Color(0xFF00BFA5),
                               ),
                             ),
                           ),

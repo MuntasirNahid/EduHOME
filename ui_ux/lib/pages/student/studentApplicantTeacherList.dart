@@ -76,9 +76,10 @@ class _ApplicantListState extends State<ApplicantList> {
           animType: AnimType.topSlide,
           showCloseIcon: true,
           title: 'Success',
-          desc: 'Tuition Request Accepted Successfully.',
+          desc:
+              'Tuition Request Accepted Successfully.Check Notification for further details',
           btnOkOnPress: () {
-            Navigator.pop(context,updatedPosts);
+            Navigator.pop(context, updatedPosts);
           },
         ).show();
       }

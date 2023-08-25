@@ -463,17 +463,18 @@ class _TeacherHomeState extends State<TeacherHome> {
   @override
   void initState() {
     super.initState();
-    //  picturePath = currentStudent!.picturePath;
-    picturePath = currentTeacher?.picturePath ??
-        ''; // Use an empty string as default if picturePath is null
-    fullName = currentTeacher?.fullName ??
-        ''; // Use an empty string as default if fullName is null
+    picturePath = currentTeacher!.picturePath.toString();
+    //picturePath = currentTeacher?.picturePath ??
+    //  ''; // Use an empty string as default if picturePath is null
+    //  fullName = currentTeacher?.fullName ??
+    //    ''; // Use an empty string as default if fullName is null
 
-    teacherId = currentTeacher?.id ?? '';
+    //teacherId = currentTeacher?.id ?? '';
 
-    //teacherId = currentTeacher!.id;
+    teacherId = currentTeacher!.id;
 
-    //  fullName = currentStudent!.fullName;
+    fullName = currentTeacher!.fullName;
+
     fetchTuitionAdvertisements();
   }
 

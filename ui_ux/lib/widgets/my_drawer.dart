@@ -141,7 +141,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             });
                             widget.onDataSelected(filterObject);
                           },
-                          child: Text('Physics'),
+                          child: Text(
+                            'Physics',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(clickPhysics),
                           ),
@@ -160,7 +163,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             });
                             widget.onDataSelected(filterObject);
                           },
-                          child: Text('Math'),
+                          child: Text(
+                            'Math',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(clickMath),
                           ),
@@ -178,7 +184,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             });
                             widget.onDataSelected(filterObject);
                           },
-                          child: Text('Chemistry'),
+                          child: Text(
+                            'Chemistry',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(clickChemistry),
                           ),
@@ -202,7 +211,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             });
                             widget.onDataSelected(filterObject);
                           },
-                          child: Text('English'),
+                          child: Text(
+                            'English',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(clickEnglish),
                           ),
@@ -221,7 +233,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             });
                             widget.onDataSelected(filterObject);
                           },
-                          child: Text('Biology'),
+                          child: Text(
+                            'Biology',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(clickBiology),
                           ),
@@ -240,7 +255,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             });
                             widget.onDataSelected(filterObject);
                           },
-                          child: Text('ICT'),
+                          child: Text(
+                            'ICT',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(clickIct),
                           ),
@@ -269,7 +287,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             }
                             widget.onDataSelected(filterObject);
                           },
-                          child: Text('Male'),
+                          child: Text(
+                            'Male',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(clickMale),
                           ),
@@ -284,7 +305,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             }
                             widget.onDataSelected(filterObject);
                           },
-                          child: Text('Female'),
+                          child: Text(
+                            'Female',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(clickFemale),
                           ),
@@ -307,7 +331,7 @@ class _MyDrawerState extends State<MyDrawer> {
                           widget.onDataSelected(filterObject);
                         },
                         decoration: InputDecoration(
-                          labelText: 'Location',
+                          labelText: 'Write Location',
                           hintText: 'Enter your preferred location',
                         ),
                       ),
@@ -338,7 +362,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             }
                             widget.onDataSelected(filterObject);
                           },
-                          child: Text('2k-3k'),
+                          child: Text(
+                            '2k-3k',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(click2k),
                           ),
@@ -355,7 +382,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             }
                             widget.onDataSelected(filterObject);
                           },
-                          child: Text('3k-5k'),
+                          child: Text(
+                            '3k-5k',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(click3k),
                           ),
@@ -372,7 +402,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             }
                             widget.onDataSelected(filterObject);
                           },
-                          child: Text('5k-7k'),
+                          child: Text(
+                            '5k-7k',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(click5k),
                           ),
@@ -394,7 +427,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             }
                             widget.onDataSelected(filterObject);
                           },
-                          child: Text('7k-9k'),
+                          child: Text(
+                            '7k-9k',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(click7k),
                           ),
@@ -411,7 +447,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             }
                             widget.onDataSelected(filterObject);
                           },
-                          child: Text('10k+'),
+                          child: Text(
+                            '10k+',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(click10k),
                           ),
@@ -443,7 +482,10 @@ class _MyDrawerState extends State<MyDrawer> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('1'),
+                              Text(
+                                '1',
+                                style: TextStyle(color: Colors.black),
+                              ),
                               SizedBox(width: 5),
                               //Icon(Icons.star, color: Colors.yellow),
                             ],
@@ -466,7 +508,10 @@ class _MyDrawerState extends State<MyDrawer> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('2'),
+                              Text(
+                                '2',
+                                style: TextStyle(color: Colors.black),
+                              ),
                               SizedBox(width: 5),
                               //Icon(Icons.star, color: Colors.yellow),
                             ],
@@ -488,7 +533,10 @@ class _MyDrawerState extends State<MyDrawer> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('3'),
+                              Text(
+                                '3',
+                                style: TextStyle(color: Colors.black),
+                              ),
                               SizedBox(width: 5),
                               //  Icon(Icons.star, color: Colors.yellow),
                             ],
@@ -515,7 +563,10 @@ class _MyDrawerState extends State<MyDrawer> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('4'),
+                              Text(
+                                '4',
+                                style: TextStyle(color: Colors.black),
+                              ),
                               SizedBox(width: 5),
                               //    Icon(Icons.star, color: Colors.yellow),
                             ],
@@ -540,7 +591,10 @@ class _MyDrawerState extends State<MyDrawer> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('5'),
+                              Text(
+                                '5',
+                                style: TextStyle(color: Colors.black),
+                              ),
                               SizedBox(width: 5),
                             ],
                           ),
