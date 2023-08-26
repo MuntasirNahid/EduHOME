@@ -22,6 +22,7 @@ app.use("/api/student", studentRoutes);
 app.use("/api/teacher", teacherRoutes);
 app.use("/filter", filterRouter);
 app.use("/users", userRoute);
+
 //connect to db
 mongoose
   .connect(process.env.MONGO_URI)
