@@ -6,7 +6,7 @@ const Offer = require("../models/Offer");
 
 const getAllAdvertisement = async (req, res) => {
   try {
-    const advertisements = await Advertisement.find().sort({ createdAt: - 1 });
+    const advertisements = await Advertisement.find().sort({ _id: -1 });
     // const advertisements = await Advertisement.find();
     res.status(200).json(advertisements);
   } catch (err) {
@@ -65,7 +65,7 @@ const getPendingOffers = async (req, res) => {
 
   try {
     const pendingOffers = await Offer.find({ teacherId: id }).sort({
-      createdAt: -1,
+      _id: -1,
     });
     res.status(200).json(pendingOffers);
   } catch (error) {
@@ -89,7 +89,7 @@ const getTeacherNotifications = async (req, res) => {
   try {
     const notifications = await Notification.find({
       recipientId: teacherId,
-    }).sort({ createdAt: -1 }); // Sort by createdAt in descending order
+    }).sort({ _id: -1 }); // Sort by createdAt in descending order
 
     res.status(200).json(notifications);
   } catch (error) {
@@ -236,7 +236,7 @@ const rejectPendingOffer = async (req, res) => {
 
 const getAllTeachers = async (req, res) => {
   try {
-    const teachers = await Teacher.find();
+    const teachers = await Teacher.find().sort({ _id: -1 });
     res.status(200).json(teachers);
   } catch (err) {
     res.status(404).json({ message: "Failed to retrive all teacher details" });

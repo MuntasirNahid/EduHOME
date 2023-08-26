@@ -1,4 +1,7 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:quickalert/quickalert.dart';
+import 'package:ui_ux/constants/Colors.dart';
 import 'package:ui_ux/pages/student/services/student_services.dart';
 import 'package:ui_ux/widgets/CustomDropDownButtonForTuitionEdit.dart';
 import '../../constants/dropdown_list.dart';
@@ -83,6 +86,16 @@ class _EditTuitionPostState extends State<EditTuitionPost> {
     });
   }
 
+  void initState() {
+    selectedTuitionType = widget.advertisement.tuitionType;
+    selectedClass = widget.advertisement.classNumber.toString();
+    selectedGender = widget.advertisement.teacherGender;
+    selectedDays = widget.advertisement.daysInWeek.toString();
+    selectedSalary = widget.advertisement.salary.toString();
+    subjectEditingController.text = widget.advertisement.subjects;
+    locationEditingController.text = widget.advertisement.location;
+  }
+
   Future<void> updateAdvertisement() async {
     try {
       final ApiService apiService = ApiService();
@@ -96,54 +109,57 @@ class _EditTuitionPostState extends State<EditTuitionPost> {
         "subjects": subjectEditingController.text,
         "location": locationEditingController.text,
       };
+      print(updateData);
       final Advertisement updatedAdvertisement =
           await apiService.updateAdvertisement(
         widget.advertisement.id, // Provide the advertisement ID
         updateData,
       );
-      void initState() {
-        selectedTuitionType = widget.advertisement.tuitionType;
-        selectedClass = widget.advertisement.classNumber.toString();
-        selectedGender = widget.advertisement.teacherGender;
-        selectedDays = widget.advertisement.daysInWeek.toString();
-        selectedSalary = widget.advertisement.salary.toString();
-        subjectEditingController.text = widget.advertisement.subjects;
-        locationEditingController.text = widget.advertisement.location;
-      }
 
-      ;
-
-      setState(() {
-        // Update the existing advertisement in the list with the updated one
-        widget.advertisement.tuitionType = updatedAdvertisement.tuitionType;
-        widget.advertisement.classNumber = updatedAdvertisement.classNumber;
-        widget.advertisement.teacherGender = updatedAdvertisement.teacherGender;
-        widget.advertisement.daysInWeek = updatedAdvertisement.daysInWeek;
-        widget.advertisement.salary = updatedAdvertisement.salary;
-        widget.advertisement.subjects = updatedAdvertisement.subjects;
-        widget.advertisement.location = updatedAdvertisement.location;
-      });
+      // commented out code for findign issue
+      // setState(() {
+      //   // Update the existing advertisement in the list with the updated one
+      //   widget.advertisement.tuitionType = updatedAdvertisement.tuitionType;
+      //   widget.advertisement.classNumber = updatedAdvertisement.classNumber;
+      //   widget.advertisement.teacherGender = updatedAdvertisement.teacherGender;
+      //   widget.advertisement.daysInWeek = updatedAdvertisement.daysInWeek;
+      //   widget.advertisement.salary = updatedAdvertisement.salary;
+      //   widget.advertisement.subjects = updatedAdvertisement.subjects;
+      //   widget.advertisement.location = updatedAdvertisement.location;
+      // });
 
       // Show a success snackbar
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Advertisement updated successfully"),
-          duration: Duration(seconds: 2),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text("Advertisement updated successfully"),
+      //     duration: Duration(seconds: 2),
+      //   ),
+      // );
+
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.topSlide,
+        showCloseIcon: true,
+        title: 'Success',
+        desc: 'Post Updated Successfully.',
+        btnOkOnPress: () {
+          Navigator.pop(context);
+        },
+      ).show();
 
       // You can navigate back to the previous screen if needed
-      Navigator.pop(context);
+      // Navigator.pop(context);
     } catch (error) {
       // Handle error
       print('Error updating advertisement: $error');
       // Show an error snackbar
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Failed to update advertisement"),
-          duration: Duration(seconds: 2),
-        ),
-      );
+      QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          text: "Failed to Update",
+          title: "Updation Failed",
+          confirmBtnColor: buttonColor);
     }
   }
 

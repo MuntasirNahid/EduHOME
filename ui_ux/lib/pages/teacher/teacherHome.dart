@@ -652,7 +652,8 @@ class _TeacherHomeState extends State<TeacherHome> {
                           ? filteredTuitionList
                           : tuitionList)
                       .map((item) {
-                bool appliedAdvertisement = false;
+                bool appliedAdvertisement =
+                    item.teacherId.contains(currentTeacher!.id.toString());
 
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -810,9 +811,10 @@ class _TeacherHomeState extends State<TeacherHome> {
                                   }
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: item.applied
-                                      ? Colors.blueGrey[300]
-                                      : Colors.green,
+                                  backgroundColor:
+                                      item.applied || appliedAdvertisement
+                                          ? Colors.blueGrey[300]
+                                          : Colors.green,
                                   // Change the background color based on the application status
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0),
@@ -820,7 +822,7 @@ class _TeacherHomeState extends State<TeacherHome> {
                                   padding: EdgeInsets.all(15.0),
                                 ),
                                 child: Text(
-                                  item.applied
+                                  item.applied || appliedAdvertisement
                                       ? 'Applied'
                                       : 'Apply', // Change button text based on the application status
                                   style: TextStyle(

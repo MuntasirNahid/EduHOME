@@ -7,7 +7,7 @@ const Offer = require("../models/Offer");
 
 const getStudentHomePage = async (req, res) => {
   try {
-    const teachers = await Teacher.find();
+    const teachers = await Teacher.find().sort({ _id: -1 });
     res.status(200).json(teachers);
   } catch (err) {
     res.status(404).json({ message: "Failed to retrive all teachers details" });
@@ -40,7 +40,7 @@ const getStudentNotifications = async (req, res) => {
   try {
     const notifications = await Notification.find({
       recipientId: studentId,
-    }).sort({ createdAt: -1 }); // Sort by createdAt in descending order
+    }).sort({ _id: -1 }); // Sort by createdAt in descending order
 
     res.status(200).json(notifications);
   } catch (error) {
@@ -144,7 +144,7 @@ const getMyAdvertisements = async (req, res) => {
     const myAdvertisements = await Advertisement.find({
       _id: { $in: advertisementIds },
     })
-      .sort({ createdAt: -1 })
+      .sort({ _id: -1 })
       .exec();
 
     res.status(200).json(myAdvertisements);
@@ -261,7 +261,7 @@ const acceptApplicant = async (req, res) => {
     advertisement.booked = true;
 
     await advertisement.save();
-    
+
     const updatedAdvertisement = await Advertisement.findById(advertisementId);
 
     const newNotification = new Notification({
