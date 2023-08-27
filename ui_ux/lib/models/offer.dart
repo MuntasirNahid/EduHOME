@@ -3,6 +3,7 @@ class Offer {
   final String studentId;
   final String teacherId;
   final String classNumber;
+  final String picturePath;
   final String location;
   final String note;
 
@@ -11,6 +12,7 @@ class Offer {
     required this.studentId,
     required this.teacherId,
     required this.classNumber,
+    required this.picturePath,
     required this.location,
     required this.note,
   });
@@ -21,6 +23,7 @@ class Offer {
       studentId: json['studentId'],
       teacherId: json['teacherId'],
       classNumber: json['classStudies'] ?? 0,
+      picturePath: json['picturePath'],
       location: json['location'],
       note: json['note'],
     );

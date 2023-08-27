@@ -11,8 +11,15 @@ import '../../widgets/custom_dropdown_for_post_tuition.dart';
 
 class EditTuitionPost extends StatefulWidget {
   final Advertisement advertisement; // Define the named parameter here
+  final Function(List<Advertisement> updatedAdvertisements)
+      onUpdateAdvertisements;
+  final List<Advertisement> fetchedPosts;
 
-  const EditTuitionPost({required this.advertisement, Key? key})
+  const EditTuitionPost(
+      {required this.advertisement,
+      required this.onUpdateAdvertisements,
+      required this.fetchedPosts,
+      Key? key})
       : super(key: key);
 
   @override
@@ -36,9 +43,7 @@ class _EditTuitionPostState extends State<EditTuitionPost> {
     '10',
     '11',
     '12',
-    'Other',
     'Alim',
-    'Dawra'
   ];
 
   final List<String> Salaries = salaryList;
@@ -116,25 +121,19 @@ class _EditTuitionPostState extends State<EditTuitionPost> {
         updateData,
       );
 
-      // commented out code for findign issue
-      // setState(() {
-      //   // Update the existing advertisement in the list with the updated one
-      //   widget.advertisement.tuitionType = updatedAdvertisement.tuitionType;
-      //   widget.advertisement.classNumber = updatedAdvertisement.classNumber;
-      //   widget.advertisement.teacherGender = updatedAdvertisement.teacherGender;
-      //   widget.advertisement.daysInWeek = updatedAdvertisement.daysInWeek;
-      //   widget.advertisement.salary = updatedAdvertisement.salary;
-      //   widget.advertisement.subjects = updatedAdvertisement.subjects;
-      //   widget.advertisement.location = updatedAdvertisement.location;
-      // });
-
-      // Show a success snackbar
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text("Advertisement updated successfully"),
-      //     duration: Duration(seconds: 2),
-      //   ),
-      // );
+      List<Advertisement> updatedPosts = List.from(widget.fetchedPosts);
+      updatedPosts.forEach((ad) {
+        if (ad.id == widget.advertisement.id) {
+          ad.tuitionType = selectedTuitionType;
+          ad.classNumber = selectedClass;
+          ad.teacherGender = selectedGender;
+          ad.daysInWeek = int.parse(selectedDays);
+          ad.salary = int.parse(selectedSalary);
+          ad.subjects = subjectEditingController.text;
+          ad.location = locationEditingController.text;
+        }
+      });
+      widget.onUpdateAdvertisements(updatedPosts);
 
       AwesomeDialog(
         context: context,
@@ -144,7 +143,7 @@ class _EditTuitionPostState extends State<EditTuitionPost> {
         title: 'Success',
         desc: 'Post Updated Successfully.',
         btnOkOnPress: () {
-          Navigator.pop(context);
+          Navigator.pop(context, updatedPosts);
         },
       ).show();
 

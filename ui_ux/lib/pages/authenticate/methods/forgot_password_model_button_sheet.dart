@@ -1,3 +1,4 @@
+import 'package:ui_ux/pages/authenticate/email_recovery_screen.dart';
 import 'package:ui_ux/pages/authenticate/forget_password_mail.dart';
 import 'package:ui_ux/pages/authenticate/forget_password_number.dart';
 import 'package:flutter/material.dart';
@@ -12,49 +13,48 @@ class ForgetPasswordScreen {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         builder: (context) => Container(
-              padding: const EdgeInsets.all(30.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Try One Method To Recover!",
-                    style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25),
-                  ),
-                  Text(
-                    "Select one of the options given below to recover your password",
-                    style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontSize: 15,
-                        fontWeight: FontWeight.w200),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  ForgotPasswordBtnWidget(
-                    onTap: () {
-                      Get.to(() => ForgotPasswordMailScreen());
-                      //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ForgotPasswordMailScreen()));
-                      // Navigator.push(context, MaterialPageRoute(builder:(context)=> ForgotPasswordMailScreen()));
-                    },
-                    btnIcon: Icons.mail_outline_rounded,
-                    title: "E-Mail",
-                    subTitle: "Reset Via E-mail Verification",
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ForgotPasswordBtnWidget(
-                    onTap: () {
-                      Get.to(() => ForgotPasswordPhoneScreen());
-                    },
-                    btnIcon: Icons.mobile_friendly_rounded,
-                    title: "Phone",
-                    subTitle: "Reset Via Phone Verification",
-                  ),
-                ],
+              padding: const EdgeInsets.all(10.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Try One Method To Recover!",
+                      style: TextStyle(
+                          fontFamily: "Poppins",
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25),
+                    ),
+                    Text(
+                      "Select one of the options given below to recover your password",
+                      style: TextStyle(
+                          fontFamily: "Poppins",
+                          fontSize: 15,
+                          fontWeight: FontWeight.w200),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    ForgotPasswordBtnWidget(
+                      onTap: () {
+                        //Get.toNamed('/forgotPasswordMail');
+                        Get.to(() => EmailRecovery());
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             ForgotPasswordMailScreen()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const EmailRecovery()));
+                      },
+                      btnIcon: Icons.mail_outline_rounded,
+                      title: "E-Mail",
+                      subTitle: "Reset Via E-mail Verification",
+                    ),
+                  ],
+                ),
               ),
             ));
   }

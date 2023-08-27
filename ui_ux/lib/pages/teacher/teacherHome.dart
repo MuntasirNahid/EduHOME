@@ -654,12 +654,14 @@ class _TeacherHomeState extends State<TeacherHome> {
                       .map((item) {
                 bool appliedAdvertisement =
                     item.teacherId.contains(currentTeacher!.id.toString());
-
+                if (item.booked) {
+                  return SizedBox();
+                }
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TuitionCard(
                       cardHeight: 220,
-                      cardWidth: 333,
+                      cardWidth: MediaQuery.of(context).size.width - 48,
                       child: Column(
                         children: [
                           SizedBox(

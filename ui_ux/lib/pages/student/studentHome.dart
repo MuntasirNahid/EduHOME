@@ -12,8 +12,8 @@ import 'package:ui_ux/provider/student_provider.dart';
 import 'package:ui_ux/widgets/student/teacher_list.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import '../../widgets/student/student_my_drawer.dart';
+import 'package:ui_ux/constants/ip.dart';
 
 class studentHome extends StatefulWidget {
   const studentHome({super.key});
@@ -30,6 +30,7 @@ class _studentHomeState extends State<studentHome> {
 
   List<Teacher2> teachers = [];
   List<Teacher2> filteredTeachers = [];
+
   bool isSearching = false;
 
   String picturePath = '';
@@ -41,17 +42,11 @@ class _studentHomeState extends State<studentHome> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // Student? currentStudent = StudentUser.getCurrentStudentUser();
-
-    // picturePath = currentStudent?.picturePath ??
-    //     ''; // Use an empty string as default if picturePath is null
-    // fullName = currentStudent?.fullName ??
-    //     ''; // Use an empty string as default if fullName is null
-
     fullName = currentStudent!.fullName;
     picturePath = currentStudent!.picturePath.toString();
 
     textController.addListener(_onSearchTextChanged);
+
     fetchTeachers();
   }
 
@@ -67,6 +62,22 @@ class _studentHomeState extends State<studentHome> {
     }
   }
 
+  // void _onSearchTextChanged() {
+  //   String searchText = textController.text.toLowerCase();
+  //   setState(() {
+  //     if (searchText.isNotEmpty) {
+  //       isSearching = true;
+  //       filteredTeachers = teachers
+  //           .where((teacher) =>
+  //               teacher.fullName.toLowerCase().contains(searchText) ||
+  //               teacher.teachingSubject.any(
+  //                   (subject) => subject.toLowerCase().contains(searchText)))
+  //           .toList();
+  //     } else {
+  //       isSearching = false;
+  //     }
+  //   });
+  // }
   void _onSearchTextChanged() {
     String searchText = textController.text.toLowerCase();
     setState(() {
@@ -75,6 +86,7 @@ class _studentHomeState extends State<studentHome> {
         filteredTeachers = teachers
             .where((teacher) =>
                 teacher.fullName.toLowerCase().contains(searchText) ||
+                teacher.institution.toLowerCase().contains(searchText) ||
                 teacher.teachingSubject.any(
                     (subject) => subject.toLowerCase().contains(searchText)))
             .toList();
@@ -83,7 +95,6 @@ class _studentHomeState extends State<studentHome> {
       }
     });
   }
-  // String  fullName = currentStudent!.fullName;
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +107,6 @@ class _studentHomeState extends State<studentHome> {
           padding: const EdgeInsets.only(top: 8.0, left: 10),
           child: CircleAvatar(
             backgroundImage: NetworkImage(picturePath),
-            //   'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80'),
           ),
         ),
         title: Column(
@@ -134,10 +144,12 @@ class _studentHomeState extends State<studentHome> {
         ],
       ),
 
+      //drawer for left side drawer, endDrawer for right side drawer
+
       endDrawer: StudentMyDrawer(
         onDataSelected: (FilterObjectStudent selectedData) async {
-          print(selectedData.teachingSubject);
-          final url = Uri.parse('http://192.168.0.102:4002/filter/getTutors');
+          //      print(selectedData.teachingSubject);
+          final url = Uri.parse('${ip}/filter/getTutors');
           final headers = <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           };
@@ -152,12 +164,12 @@ class _studentHomeState extends State<studentHome> {
 
             if (response.statusCode == 200) {
               var responseData = jsonDecode(response.body);
-              print(responseData.toString());
+              // print(responseData.toString());
               List<Teacher2> fetchedTeacher = List<Teacher2>.from(
                   responseData.map((data) => Teacher2.fromJson(data)));
               setState(() {
                 filteredTeachers = fetchedTeacher;
-                print(filteredTeachers.toString());
+                //   print(filteredTeachers.toString());
               });
             } else {
               print('Error: Request failed with status ${response.statusCode}');
@@ -177,7 +189,6 @@ class _studentHomeState extends State<studentHome> {
         },
       ),
 
-      //drawer for left side drawer, endDrawer for right side drawer
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -188,7 +199,7 @@ class _studentHomeState extends State<studentHome> {
                 children: [
                   Container(
                     margin: EdgeInsets.only(top: 2),
-                    width: 325,
+                    width: MediaQuery.of(context).size.width - 64,
                     height: 40,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
@@ -206,7 +217,7 @@ class _studentHomeState extends State<studentHome> {
                       controller: textController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Search Teacher Name',
+                        hintText: 'Search Teacher Name or Subject',
                         hintStyle: TextStyle(
                           color: Colors.black.withOpacity(0.5),
                         ),
@@ -217,6 +228,7 @@ class _studentHomeState extends State<studentHome> {
                       ),
                     ),
                   ),
+                  Spacer(),
                   IconButton(
                     onPressed: () {
                       _scaffoldKey.currentState?.openEndDrawer();
@@ -256,7 +268,6 @@ class _studentHomeState extends State<studentHome> {
                           teacher.subject.isNotEmpty ? teacher.subject : "",
                       location: teacher.location,
                       profileImage: teacher.picturePath,
-                      //'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80', //teacher.picturePath,
                       onOfferPressed: () {
                         Navigator.push(
                           context,

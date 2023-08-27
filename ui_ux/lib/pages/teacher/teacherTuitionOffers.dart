@@ -118,7 +118,7 @@ class _TuitionOffersState extends State<TuitionOffers> {
                 itemBuilder: (context, index) {
                   return TuitionOfferCard(
                     studentName: offers[index].studentName,
-                    picturePath: picturePath,
+                    picturePath: offers[index].picturePath,
                     studentClass: offers[index].classNumber,
                     location: offers[index].location,
                     note: offers[index].note,

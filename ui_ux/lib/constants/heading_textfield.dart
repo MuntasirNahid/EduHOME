@@ -11,7 +11,7 @@ class HeadingText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerLeft,
-      width: 310,
+      width: MediaQuery.of(context).size.width - 50,
       child: Text(
         headingText,
         style: TextStyle(

@@ -70,14 +70,14 @@ class _ApplicantListState extends State<ApplicantList> {
         });
 
         widget.onUpdateAdvertisements(updatedPosts);
+
         AwesomeDialog(
           context: context,
           dialogType: DialogType.success,
           animType: AnimType.topSlide,
           showCloseIcon: true,
           title: 'Success',
-          desc:
-              'Tuition Request Accepted Successfully.Check Notification for further details',
+          desc: 'Applicant accepted Successfully.',
           btnOkOnPress: () {
             Navigator.pop(context, updatedPosts);
           },

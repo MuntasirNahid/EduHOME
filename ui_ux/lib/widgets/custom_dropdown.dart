@@ -25,7 +25,7 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
   Widget build(BuildContext context) {
     return Container(
       //height: 42,
-      width: 160,
+      width: MediaQuery.of(context).size.width * .43,
       decoration: containerDecoration,
       child: DropdownButtonFormField(
         decoration: InputDecoration(

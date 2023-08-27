@@ -18,7 +18,6 @@ class TeacherListCard extends StatelessWidget {
 
   const TeacherListCard({
     required this.teacher,
-    //can skip the below code, just waiting for pic's issue to resolve
     required this.teacherName,
     required this.subjects,
     required this.experience,
@@ -64,7 +63,9 @@ class TeacherListCard extends StatelessWidget {
                   children: [
                     Text(
                       teacherName,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Spacer(),
                     Container(
@@ -130,9 +131,10 @@ class TeacherListCard extends StatelessWidget {
                   Text(
                     '${experience} experience',
                     style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        color: Colors.black,
-                        fontSize: 13),
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                      fontSize: 13,
+                    ),
                   )
                 ],
               ),
@@ -148,9 +150,10 @@ class TeacherListCard extends StatelessWidget {
                   Text(
                     'Expected Salary: ${salaryRange} Tk',
                     style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        color: Colors.black,
-                        fontSize: 13),
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                      fontSize: 13,
+                    ),
                   )
                 ],
               ),
@@ -195,7 +198,7 @@ class TeacherListCard extends StatelessWidget {
                         fontSize: 13,
                       ),
                     ),
-                    Spacer(), // Expands to take up remaining space
+                    Spacer(),
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(

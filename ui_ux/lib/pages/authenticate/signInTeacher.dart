@@ -65,7 +65,7 @@ class _SignInTeacherState extends State<SignInTeacher> {
               HeadingText(headingText: "E-Mail"),
               Container(
                 height: 50,
-                width: 333,
+                width: MediaQuery.of(context).size.width - 48,
                 decoration: containerDecoration,
                 child: TextFormField(
                   validator: (value) {
@@ -92,7 +92,7 @@ class _SignInTeacherState extends State<SignInTeacher> {
               HeadingText(headingText: "Password"),
               Container(
                 height: 50,
-                width: 333,
+                width: MediaQuery.of(context).size.width - 48,
                 decoration: containerDecoration,
                 child: TextFormField(
                   validator: (value) {
@@ -153,7 +153,7 @@ class _SignInTeacherState extends State<SignInTeacher> {
                 height: 20,
               ),
               Container(
-                width: 322,
+                width: MediaQuery.of(context).size.width - 48,
                 height: 42,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(

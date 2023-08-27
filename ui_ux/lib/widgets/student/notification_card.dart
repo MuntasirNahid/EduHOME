@@ -41,7 +41,7 @@ class StudentNotificationCard extends StatelessWidget {
           SizedBox(width: 7),
           Container(
             height: 90,
-            width: 340,
+            width: MediaQuery.of(context).size.width - 48,
             decoration: BoxDecoration(
               color: bgColor,
               borderRadius: BorderRadius.circular(10),

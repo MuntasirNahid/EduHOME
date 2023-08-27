@@ -59,7 +59,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
     if (currentTeacher != null) {
       controller.fullName.text = currentTeacher!.fullName;
       controller.phoneNo.text = currentTeacher!.phoneNumber;
-
+      controller.picturePath.text = currentTeacher!.picturePath.toString();
       controller.teaches.text = currentTeacher!.teachingSubject;
       controller.location.text = currentTeacher!.location;
       controller.gender.text = currentTeacher!.gender;
@@ -214,7 +214,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                   HeadingText(headingText: "Full Name"),
                   Container(
                     height: 50,
-                    width: 333,
+                    width: MediaQuery.of(context).size.width - 48,
                     decoration: containerDecoration,
                     child: TextFormField(
                       // initialValue: fullName,
@@ -238,7 +238,8 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                   //  HeadingText(headingText: "Class"),
                   Container(
                     // height: 70,
-                    width: 333,
+                    width: MediaQuery.of(context).size.width - 48,
+
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       mainAxisSize: MainAxisSize.max,
@@ -309,7 +310,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                   HeadingText(headingText: "Location"),
                   Container(
                     height: 50,
-                    width: 333,
+                    width: MediaQuery.of(context).size.width - 48,
                     decoration: containerDecoration,
                     child: TextFormField(
                       validator: (value) {
@@ -334,7 +335,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                   HeadingText(headingText: "Teaches"),
                   Container(
                     height: 50,
-                    width: 333,
+                    width: MediaQuery.of(context).size.width - 48,
                     decoration: containerDecoration,
                     child: TextFormField(
                       validator: (value) {
@@ -361,7 +362,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                   HeadingText(headingText: "Phone Number"),
                   Container(
                     height: 50,
-                    width: 333,
+                    width: MediaQuery.of(context).size.width - 48,
                     decoration: containerDecoration,
                     child: TextFormField(
                       validator: (value) {
@@ -389,7 +390,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                   HeadingText(headingText: "Password"),
                   Container(
                     height: 50,
-                    width: 333,
+                    width: MediaQuery.of(context).size.width - 48,
                     decoration: containerDecoration,
                     child: TextFormField(
                       validator: (value) {
@@ -430,7 +431,8 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
 
                   Container(
                     // height: 70,
-                    width: 333,
+                    width: MediaQuery.of(context).size.width - 48,
+
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       mainAxisSize: MainAxisSize.max,
@@ -503,7 +505,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                           children: [
                             Container(
                               alignment: Alignment.topLeft,
-                              width: 333,
+                              width: MediaQuery.of(context).size.width - 80,
                               child: Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(12.0, 0, 0, 0),
@@ -540,12 +542,12 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                   ),
 
                   Container(
-                      width: 333,
+                      width: MediaQuery.of(context).size.width - 48,
                       child: Column(
                         children: [
                           Container(
                             alignment: Alignment.topLeft,
-                            width: 310,
+                            width: MediaQuery.of(context).size.width - 80,
                             child: Text(
                               "Expected Salary",
                               style: TextStyle(
@@ -559,20 +561,22 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                           Row(
                             // mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: isStudent
-                                ? MainAxisAlignment.end
+                                ? MainAxisAlignment.spaceEvenly
                                 : MainAxisAlignment.spaceEvenly,
                             children: [
                               SubjectSalary(
-                                salaryWidth: 160,
-                                hintText: "Min",
+                                salaryWidth:
+                                    MediaQuery.of(context).size.width * 0.42,
+                                hintText: " Min",
                                 onChangeFunctionality: handleMin,
                               ),
                               SizedBox(
                                 width: 5,
                               ),
                               SubjectSalary(
-                                salaryWidth: 160,
-                                hintText: "Max",
+                                salaryWidth:
+                                    MediaQuery.of(context).size.width * 0.42,
+                                hintText: "  Max",
                                 onChangeFunctionality: handleMax,
                               )
                             ],
@@ -693,7 +697,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                   ),
 
                   Container(
-                    width: 333,
+                    width: MediaQuery.of(context).size.width - 48,
                     height: 42,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -707,6 +711,8 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                         // print(minInput);
                         // print(maxInput);
                         if (_formKey.currentState!.validate()) {
+                          print("Teacher Profile URL : " +
+                              controller.picturePath.text.toString());
                           Teacher data = new Teacher(
                               id: currentTeacher!.id,
                               fullName: controller.fullName.text.trim(),

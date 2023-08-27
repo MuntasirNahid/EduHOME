@@ -133,10 +133,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             setState(() {
                               // clickPhysics = 1 - clickPhysics; // Toggle between 0 and 1
                               if (clickPhysics == 1) {
-                                filterObject.subjects += "Phy,";
+                                filterObject.subjects += "Physics,";
                               } else {
                                 filterObject.subjects = filterObject.subjects
-                                    .replaceAll("Phy,", "");
+                                    .replaceAll("Physics,", "");
                               }
                             });
                             widget.onDataSelected(filterObject);
@@ -176,10 +176,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             clickChemistry = _onButtonPressed(clickChemistry);
                             setState(() {
                               if (clickChemistry == 1) {
-                                filterObject.subjects += "Chem,";
+                                filterObject.subjects += "Chemistry,";
                               } else {
                                 filterObject.subjects = filterObject.subjects
-                                    .replaceAll("Chem,", "");
+                                    .replaceAll("Chemistry,", "");
                               }
                             });
                             widget.onDataSelected(filterObject);
@@ -203,10 +203,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             setState(() {
                               // clickPhysics = 1 - clickPhysics; // Toggle between 0 and 1
                               if (clickEnglish == 1) {
-                                filterObject.subjects += "Eng,";
+                                filterObject.subjects += "English,";
                               } else {
                                 filterObject.subjects = filterObject.subjects
-                                    .replaceAll("Eng,", "");
+                                    .replaceAll("English,", "");
                               }
                             });
                             widget.onDataSelected(filterObject);
@@ -225,10 +225,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             setState(() {
                               // clickPhysics = 1 - clickPhysics; // Toggle between 0 and 1
                               if (clickBiology == 1) {
-                                filterObject.subjects += "Bio,";
+                                filterObject.subjects += "Biology,";
                               } else {
                                 filterObject.subjects = filterObject.subjects
-                                    .replaceAll("Bio,", "");
+                                    .replaceAll("Biology,", "");
                               }
                             });
                             widget.onDataSelected(filterObject);
@@ -247,10 +247,10 @@ class _MyDrawerState extends State<MyDrawer> {
                             setState(() {
                               // clickPhysics = 1 - clickPhysics; // Toggle between 0 and 1
                               if (clickIct == 1) {
-                                filterObject.subjects += "Ict,";
+                                filterObject.subjects += "ICT,";
                               } else {
                                 filterObject.subjects = filterObject.subjects
-                                    .replaceAll("Ict,", "");
+                                    .replaceAll("ICT,", "");
                               }
                             });
                             widget.onDataSelected(filterObject);
@@ -331,8 +331,21 @@ class _MyDrawerState extends State<MyDrawer> {
                           widget.onDataSelected(filterObject);
                         },
                         decoration: InputDecoration(
-                          labelText: 'Write Location',
+                          labelText: 'Location',
                           hintText: 'Enter your preferred location',
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                              color: Color(0xFF00BFA5),
+                            ),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xFF00BFA5),
+                              width: 2,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -601,14 +614,24 @@ class _MyDrawerState extends State<MyDrawer> {
                         ),
                       ],
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text('Apply'),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          Color(0xFF00BFA5),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.67,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          applyFilters();
+                          Navigator.pop(context);
+                        },
+                        child: Text('Apply'),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Color(0xFF00BFA5),
+                          ),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
                         ),
                       ),
                     ),

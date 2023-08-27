@@ -23,7 +23,7 @@ class TuitionOfferCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 260,
-      width: 350,
+      width: MediaQuery.of(context).size.width - 48,
       decoration: BoxDecoration(
         color: Color(0xFFD9D9D9),
         borderRadius: BorderRadius.circular(10),

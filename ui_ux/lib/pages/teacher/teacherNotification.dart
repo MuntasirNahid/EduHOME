@@ -43,7 +43,6 @@ class _teacherNotificationState extends State<teacherNotification> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
         child: Column(
           children: [
             Row(
@@ -66,28 +65,14 @@ class _teacherNotificationState extends State<teacherNotification> {
               ],
             ),
             SizedBox(
-              height: 15,
+              height: 10,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: notifications.length,
-                      itemBuilder: (context, index) {
-                        return TeacherNotificationCard(
-                          iconType: notifications[index].messageType,
-                          message: notifications[index].message,
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            Column(
+              children: notifications.map((e) {
+                return TeacherNotificationCard(
+                    iconType: e.messageType, message: e.message);
+              }).toList(),
+            )
           ],
         ),
       ),

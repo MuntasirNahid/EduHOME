@@ -1,6 +1,7 @@
 import 'package:ui_ux/constants/heading_textfield.dart';
 import 'package:ui_ux/constants/icon_constants.dart';
 import 'package:ui_ux/constants/input_decoration.dart';
+import 'package:ui_ux/pages/authenticate/email_recovery_screen.dart';
 import 'package:ui_ux/pages/authenticate/methods/forgot_password_model_button_sheet.dart';
 import 'package:ui_ux/services/authenticate/authentication_repository.dart';
 import 'package:ui_ux/services/authenticate/controllers/student_signin_controller.dart';
@@ -66,7 +67,7 @@ class _SignInStudentState extends State<SignInStudent> {
               HeadingText(headingText: "E-mail"),
               Container(
                 height: 50,
-                width: 333,
+                width: MediaQuery.of(context).size.width - 48,
                 decoration: containerDecoration,
                 child: TextFormField(
                   validator: (value) {
@@ -93,7 +94,7 @@ class _SignInStudentState extends State<SignInStudent> {
               HeadingText(headingText: "Password"),
               Container(
                 height: 50,
-                width: 333,
+                width: MediaQuery.of(context).size.width - 48,
                 decoration: containerDecoration,
                 child: TextFormField(
                   validator: (value) {
@@ -136,7 +137,7 @@ class _SignInStudentState extends State<SignInStudent> {
                       onPressed: () {
                         AuthenticationRepository.instance.userType.value =
                             "Student";
-
+                        //Get.to(() => EmailRecovery());
                         ForgetPasswordScreen.buildShowModalBottomSheet(context);
                       },
                       child: const Text(

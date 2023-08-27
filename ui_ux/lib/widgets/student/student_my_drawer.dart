@@ -42,20 +42,8 @@ class _StudentMyDrawerState extends State<StudentMyDrawer> {
 
   FilterObjectStudent filterObjectStudent = FilterObjectStudent();
 
-  // Color buttonColor = Colors.grey;
-
   int _onButtonPressed(int clickCount) {
     return clickCount == 0 ? 1 : 0;
-    // int clickCounter = clickCount;
-    // setState(
-    //   () {
-    //     if (clickCounter == 0)
-    //       clickCounter = 1;
-    //     else
-    //       clickCounter = 0;
-    //   },
-    // );
-    // return clickCounter;
   }
 
   Color getButtonColor(int clickCount) {
@@ -92,6 +80,7 @@ class _StudentMyDrawerState extends State<StudentMyDrawer> {
   }
 
   void applyFilters() {
+    print(filterObjectStudent.toString());
     // Apply the filters and pass the filtered list to the onDataSelected callback
     widget.onDataSelected(filterObjectStudent);
   }
@@ -133,13 +122,13 @@ class _StudentMyDrawerState extends State<StudentMyDrawer> {
                           onPressed: () {
                             clickPhysics = _onButtonPressed(clickPhysics);
                             setState(() {
-                              // clickPhysics = 1 - clickPhysics; // Toggle between 0 and 1
                               if (clickPhysics == 1) {
-                                filterObjectStudent.teachingSubject += "Phy,";
+                                filterObjectStudent.teachingSubject +=
+                                    "Physics,";
                               } else {
                                 filterObjectStudent.teachingSubject =
                                     filterObjectStudent.teachingSubject
-                                        .replaceAll("Phy,", "");
+                                        .replaceAll("Physics,", "");
                               }
                             });
                             widget.onDataSelected(filterObjectStudent);
@@ -174,11 +163,12 @@ class _StudentMyDrawerState extends State<StudentMyDrawer> {
                             clickChemistry = _onButtonPressed(clickChemistry);
                             setState(() {
                               if (clickChemistry == 1) {
-                                filterObjectStudent.teachingSubject += "Chem,";
+                                filterObjectStudent.teachingSubject +=
+                                    "Chemistry,";
                               } else {
                                 filterObjectStudent.teachingSubject =
                                     filterObjectStudent.teachingSubject
-                                        .replaceAll("Chem,", "");
+                                        .replaceAll("Chemistry,", "");
                               }
                             });
                             widget.onDataSelected(filterObjectStudent);
@@ -197,13 +187,13 @@ class _StudentMyDrawerState extends State<StudentMyDrawer> {
                           onPressed: () {
                             clickEnglish = _onButtonPressed(clickEnglish);
                             setState(() {
-                              // clickPhysics = 1 - clickPhysics; // Toggle between 0 and 1
                               if (clickEnglish == 1) {
-                                filterObjectStudent.teachingSubject += "Eng,";
+                                filterObjectStudent.teachingSubject +=
+                                    "English,";
                               } else {
                                 filterObjectStudent.teachingSubject =
                                     filterObjectStudent.teachingSubject
-                                        .replaceAll("Eng,", "");
+                                        .replaceAll("English,", "");
                               }
                             });
                             widget.onDataSelected(filterObjectStudent);
@@ -217,13 +207,13 @@ class _StudentMyDrawerState extends State<StudentMyDrawer> {
                           onPressed: () {
                             clickBiology = _onButtonPressed(clickBiology);
                             setState(() {
-                              // clickPhysics = 1 - clickPhysics; // Toggle between 0 and 1
                               if (clickBiology == 1) {
-                                filterObjectStudent.teachingSubject += "Bio,";
+                                filterObjectStudent.teachingSubject +=
+                                    "Biology,";
                               } else {
                                 filterObjectStudent.teachingSubject =
                                     filterObjectStudent.teachingSubject
-                                        .replaceAll("Bio,", "");
+                                        .replaceAll("Biology,", "");
                               }
                             });
                             widget.onDataSelected(filterObjectStudent);
@@ -237,13 +227,12 @@ class _StudentMyDrawerState extends State<StudentMyDrawer> {
                           onPressed: () {
                             clickIct = _onButtonPressed(clickIct);
                             setState(() {
-                              // clickPhysics = 1 - clickPhysics; // Toggle between 0 and 1
                               if (clickIct == 1) {
-                                filterObjectStudent.teachingSubject += "Ict,";
+                                filterObjectStudent.teachingSubject += "ICT,";
                               } else {
                                 filterObjectStudent.teachingSubject =
                                     filterObjectStudent.teachingSubject
-                                        .replaceAll("Ict,", "");
+                                        .replaceAll("ICT,", "");
                               }
                             });
                             widget.onDataSelected(filterObjectStudent);
@@ -317,15 +306,26 @@ class _StudentMyDrawerState extends State<StudentMyDrawer> {
                         decoration: InputDecoration(
                           labelText: 'Location',
                           hintText: 'Enter your preferred location',
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                              color: Color(0xFF00BFA5),
+                            ),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xFF00BFA5),
+                              width: 2,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-
                     Divider(
                       color: Colors.green,
                       thickness: 1,
                     ),
-                    //----------------------------------------------------------//
                     Text(
                       'Max Salary Range ',
                       style:
@@ -338,7 +338,7 @@ class _StudentMyDrawerState extends State<StudentMyDrawer> {
                           onPressed: () {
                             click2k = _onButtonPressed(click2k);
                             if (click2k == 1) {
-                              filterObjectStudent.minSalary = "0";
+                              filterObjectStudent.minSalary = "2000";
                               filterObjectStudent.maxSalary = "3000";
                             } else {
                               filterObjectStudent.minSalary = "";
@@ -346,7 +346,7 @@ class _StudentMyDrawerState extends State<StudentMyDrawer> {
                             }
                             widget.onDataSelected(filterObjectStudent);
                           },
-                          child: Text('3k'),
+                          child: Text('2k-3k'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(click2k),
                           ),
@@ -355,15 +355,15 @@ class _StudentMyDrawerState extends State<StudentMyDrawer> {
                           onPressed: () {
                             click3k = _onButtonPressed(click3k);
                             if (click3k == 1) {
-                              filterObjectStudent.minSalary = "0";
-                              filterObjectStudent.maxSalary = "5000";
+                              filterObjectStudent.minSalary = "4000";
+                              filterObjectStudent.maxSalary = "6000";
                             } else {
                               filterObjectStudent.minSalary = "";
                               filterObjectStudent.maxSalary = "";
                             }
                             widget.onDataSelected(filterObjectStudent);
                           },
-                          child: Text('5k'),
+                          child: Text('4k-6k'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(click3k),
                           ),
@@ -372,7 +372,7 @@ class _StudentMyDrawerState extends State<StudentMyDrawer> {
                           onPressed: () {
                             click5k = _onButtonPressed(click5k);
                             if (click5k == 1) {
-                              filterObjectStudent.minSalary = "0";
+                              filterObjectStudent.minSalary = "5000";
                               filterObjectStudent.maxSalary = "7000";
                             } else {
                               filterObjectStudent.minSalary = "";
@@ -380,7 +380,7 @@ class _StudentMyDrawerState extends State<StudentMyDrawer> {
                             }
                             widget.onDataSelected(filterObjectStudent);
                           },
-                          child: Text('7k'),
+                          child: Text('5k-7k'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(click5k),
                           ),
@@ -394,7 +394,7 @@ class _StudentMyDrawerState extends State<StudentMyDrawer> {
                           onPressed: () {
                             click7k = _onButtonPressed(click7k);
                             if (click7k == 1) {
-                              filterObjectStudent.minSalary = "0";
+                              filterObjectStudent.minSalary = "7000";
                               filterObjectStudent.maxSalary = "9000";
                             } else {
                               filterObjectStudent.minSalary = "";
@@ -402,7 +402,7 @@ class _StudentMyDrawerState extends State<StudentMyDrawer> {
                             }
                             widget.onDataSelected(filterObjectStudent);
                           },
-                          child: Text('9k'),
+                          child: Text('7k-9k'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(click7k),
                           ),
@@ -411,15 +411,15 @@ class _StudentMyDrawerState extends State<StudentMyDrawer> {
                           onPressed: () {
                             click10k = _onButtonPressed(click10k);
                             if (click10k == 1) {
-                              filterObjectStudent.minSalary = "0";
-                              filterObjectStudent.maxSalary = "10000";
+                              filterObjectStudent.minSalary = "10000";
+                              filterObjectStudent.maxSalary = "20000";
                             } else {
                               filterObjectStudent.minSalary = "";
                               filterObjectStudent.maxSalary = "";
                             }
                             widget.onDataSelected(filterObjectStudent);
                           },
-                          child: Text('10k'),
+                          child: Text('10k-20k'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(click10k),
                           ),
@@ -428,30 +428,42 @@ class _StudentMyDrawerState extends State<StudentMyDrawer> {
                           onPressed: () {
                             click20k = _onButtonPressed(click20k);
                             if (click20k == 1) {
-                              filterObjectStudent.minSalary = "0";
-                              filterObjectStudent.maxSalary = "20000";
+                              filterObjectStudent.minSalary = "20000";
+                              filterObjectStudent.maxSalary = "40000";
                             } else {
                               filterObjectStudent.minSalary = "";
                               filterObjectStudent.maxSalary = "";
                             }
                             widget.onDataSelected(filterObjectStudent);
                           },
-                          child: Text('20k'),
+                          child: Text('20k+'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: getButtonColor(click10k),
                           ),
                         ),
                       ],
                     ),
-
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text('Apply'),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          Color(0xFF00BFA5),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.67,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          applyFilters();
+                          Navigator.pop(context);
+                        },
+                        child: Text('Apply'),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Color(0xFF00BFA5),
+                          ),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
                         ),
                       ),
                     ),

@@ -90,7 +90,7 @@ class _StudentRegisterState extends State<StudentRegister> {
               HeadingText(headingText: "Full Name"),
               Container(
                 height: 42,
-                width: 333,
+                width: MediaQuery.of(context).size.width - 48,
                 decoration: containerDecoration,
                 child: TextFormField(
                   validator: (value) {
@@ -113,7 +113,7 @@ class _StudentRegisterState extends State<StudentRegister> {
               HeadingText(headingText: "E-Mail"),
               Container(
                 height: 42,
-                width: 333,
+                width: MediaQuery.of(context).size.width - 48,
                 decoration: containerDecoration,
                 child: TextFormField(
                   validator: (value) {
@@ -135,7 +135,7 @@ class _StudentRegisterState extends State<StudentRegister> {
               HeadingText(headingText: "Class"),
               Container(
                 height: 42,
-                width: 333,
+                width: MediaQuery.of(context).size.width - 48,
                 decoration: containerDecoration,
                 child: TextFormField(
                   cursorColor: Colors.grey[900],
@@ -169,7 +169,7 @@ class _StudentRegisterState extends State<StudentRegister> {
               HeadingText(headingText: "Instituition"),
               Container(
                 height: 42,
-                width: 333,
+                width: MediaQuery.of(context).size.width - 48,
                 decoration: containerDecoration,
                 child: TextFormField(
                   validator: (value) {
@@ -194,7 +194,7 @@ class _StudentRegisterState extends State<StudentRegister> {
               HeadingText(headingText: "Location"),
               Container(
                 height: 42,
-                width: 333,
+                width: MediaQuery.of(context).size.width - 48,
                 decoration: containerDecoration,
                 child: TextFormField(
                   validator: (value) {
@@ -219,7 +219,7 @@ class _StudentRegisterState extends State<StudentRegister> {
               HeadingText(headingText: "Phone Number"),
               Container(
                 height: 42,
-                width: 333,
+                width: MediaQuery.of(context).size.width - 48,
                 decoration: containerDecoration,
                 child: TextFormField(
                   validator: (value) {
@@ -247,7 +247,7 @@ class _StudentRegisterState extends State<StudentRegister> {
               HeadingText(headingText: "Password"),
               Container(
                 height: 42,
-                width: 333,
+                width: MediaQuery.of(context).size.width - 48,
                 decoration: containerDecoration,
                 child: TextFormField(
                   validator: (value) {
@@ -284,7 +284,7 @@ class _StudentRegisterState extends State<StudentRegister> {
                 height: 20,
               ),
               Container(
-                width: 333,
+                width: MediaQuery.of(context).size.width - 48,
                 height: 42,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(

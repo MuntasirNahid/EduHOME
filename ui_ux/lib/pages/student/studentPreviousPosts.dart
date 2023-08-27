@@ -229,17 +229,37 @@ class _StudentPostsState extends State<StudentPosts> {
                                               width: 0,
                                             )
                                           : IconButton(
-                                              onPressed: () {
+                                              onPressed: () async {
                                                 // EDIT  BUTTON
-                                                Navigator.push(
+
+                                                var updatedPosts =
+                                                    await Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         EditTuitionPost(
-                                                            advertisement:
-                                                                item),
+                                                      advertisement: item,
+                                                      onUpdateAdvertisements:
+                                                          (updatedAdvertisements) {
+                                                        setState(() {
+                                                          fetchedPosts = List<
+                                                                  Advertisement>.from(
+                                                              updatedAdvertisements);
+                                                        });
+                                                      },
+                                                      fetchedPosts:
+                                                          fetchedPosts,
+                                                    ),
                                                   ),
                                                 );
+
+                                                if (updatedPosts != null) {
+                                                  setState(() {
+                                                    fetchedPosts = List<
+                                                            Advertisement>.from(
+                                                        updatedPosts);
+                                                  });
+                                                }
                                               },
                                               icon: FaIcon(
                                                   FontAwesomeIcons.penToSquare,
@@ -284,6 +304,7 @@ class _StudentPostsState extends State<StudentPosts> {
                                 Container(
                                   child: Expanded(
                                     child: ElevatedButton(
+                                      //applicant
                                       onPressed: () async {
                                         var updatedPosts = await Navigator.push(
                                           context,

@@ -147,7 +147,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                 HeadingText(headingText: "Full Name"),
                 Container(
                   height: 50,
-                  width: 333,
+                  width: MediaQuery.of(context).size.width - 48,
                   decoration: containerDecoration,
                   child: TextFormField(
                     validator: (value) {
@@ -170,7 +170,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                 HeadingText(headingText: "Email"),
                 Container(
                   height: 50,
-                  width: 333,
+                  width: MediaQuery.of(context).size.width - 48,
                   decoration: containerDecoration,
                   child: TextFormField(
                     validator: (value) {
@@ -193,7 +193,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                 HeadingText(headingText: "Teaches"),
                 Container(
                   height: 50,
-                  width: 333,
+                  width: MediaQuery.of(context).size.width - 48,
                   decoration: containerDecoration,
                   child: TextFormField(
                     validator: (value) {
@@ -214,7 +214,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                 //  HeadingText(headingText: "Class"),
                 Container(
                   // height: 70,
-                  width: 333,
+                  width: MediaQuery.of(context).size.width - 48,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisSize: MainAxisSize.max,
@@ -282,7 +282,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                 HeadingText(headingText: "Location"),
                 Container(
                   height: 50,
-                  width: 333,
+                  width: MediaQuery.of(context).size.width - 48,
                   decoration: containerDecoration,
                   child: TextFormField(
                     validator: (value) {
@@ -307,7 +307,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                 HeadingText(headingText: "Phone Number"),
                 Container(
                   height: 50,
-                  width: 333,
+                  width: MediaQuery.of(context).size.width - 48,
                   decoration: containerDecoration,
                   child: TextFormField(
                     validator: (value) {
@@ -335,7 +335,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                 HeadingText(headingText: "Password"),
                 Container(
                   height: 50,
-                  width: 333,
+                  width: MediaQuery.of(context).size.width - 48,
                   decoration: containerDecoration,
                   child: TextFormField(
                     validator: (value) {
@@ -374,7 +374,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
 
                 Container(
                   // height: 70,
-                  width: 333,
+                  width: MediaQuery.of(context).size.width - 48,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisSize: MainAxisSize.max,
@@ -441,7 +441,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                 ),
 
                 Container(
-                  width: 333,
+                  width: MediaQuery.of(context).size.width - 48,
                   child: isStudent
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -477,7 +477,8 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                               children: [
                                 Container(
                                   alignment: Alignment.topLeft,
-                                  width: 145,
+                                  width:
+                                      MediaQuery.of(context).size.width - 220,
                                   child: Text(
                                     "Expected Salary",
                                     style: TextStyle(
@@ -490,11 +491,12 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                                 ),
                                 Row(
                                   // mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     SubjectSalary(
                                       salaryWidth: 80,
-                                      hintText: "Min",
+                                      hintText: "  Min",
                                       onChangeFunctionality: handleMin,
                                     ),
                                     SizedBox(
@@ -502,7 +504,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                                     ),
                                     SubjectSalary(
                                       salaryWidth: 80,
-                                      hintText: "Max",
+                                      hintText: "  Max",
                                       onChangeFunctionality: handleMax,
                                     )
                                   ],
@@ -529,7 +531,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                             Row(
                               // mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: isStudent
-                                  ? MainAxisAlignment.end
+                                  ? MainAxisAlignment.spaceEvenly
                                   : MainAxisAlignment.spaceEvenly,
                               children: [
                                 SubjectSalary(
@@ -555,7 +557,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                 ),
 
                 Container(
-                  width: 333,
+                  width: MediaQuery.of(context).size.width - 48,
                   height: 42,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(

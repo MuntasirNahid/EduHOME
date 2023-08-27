@@ -178,7 +178,7 @@ class ApplicantListCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Icon(
-                      FontAwesomeIcons.locationArrow,
+                      FontAwesomeIcons.locationDot,
                       color: Colors.grey,
                       size: 18,
                     ),
