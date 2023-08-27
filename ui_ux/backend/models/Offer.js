@@ -19,6 +19,10 @@ const offerSchema = new Schema({
     type: String,
     required: true,
   },
+  picturePath: {
+    type: String,
+    default: "",
+  },
   location: {
     type: String,
     required: true,

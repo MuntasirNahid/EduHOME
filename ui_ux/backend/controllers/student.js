@@ -311,12 +311,14 @@ const offerTeacher = async (req, res) => {
       const classStudies = student.classStudies;
       const location = student.location;
       const studentName = student.fullName;
+      const picturePath = student.picturePath;
       // Create a new offer
       const newOffer = new Offer({
         studentName,
         studentId: id,
         teacherId,
         classStudies,
+        picturePath,
         location,
         note,
       });
