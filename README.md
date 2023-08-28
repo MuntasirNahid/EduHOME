@@ -70,7 +70,7 @@ Then run the following commands to run your app:
 
 ## Honourable Supervisor
 
-- <a href = https://www.sust.edu/d/cse/faculty-profile-detail/52/4>Ayesha Tasmin </a>
+- <a href = https://www.sust.edu/d/cse/faculty-profile-detail/52/4>Ayesha Tasnim </a>
 
   - **Assistant Professor**
 
