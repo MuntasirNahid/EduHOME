@@ -10,7 +10,6 @@ EduHOME functions as an educational hub, enabling the seamless connection betwee
 ## Languages, Tools and Frameworks:<a name="tools"></a>
 
 - Backend
-    - Node.js
     - Express.js
     - FireBase      
 - Database
@@ -62,7 +61,7 @@ Then run the following commands to run your app:
 ### Client Side
 ```bash
   flutter pub get
-  open a simulator 
+  open a emulator 
   flutter run
 ```
 
