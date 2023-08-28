@@ -78,6 +78,8 @@ class _studentHomeState extends State<studentHome> {
   //     }
   //   });
   // }
+  
+  //implemented this in submission hackathon
   void _onSearchTextChanged() {
     String searchText = textController.text.toLowerCase();
     setState(() {
